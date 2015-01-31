@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include samsungapp *.css
+recursive-include samsungapp *.csv
+recursive-include samsungapp *.html
+recursive-include samsungapp *.ico
+recursive-include samsungapp *.js
+recursive-include samsungapp *.json
+recursive-include samsungapp *.md
+recursive-include samsungapp *.png
+recursive-include samsungapp *.py
+recursive-include samsungapp *.svg
+recursive-include samsungapp *.txt
+recursive-exclude samsungapp *.pyc
