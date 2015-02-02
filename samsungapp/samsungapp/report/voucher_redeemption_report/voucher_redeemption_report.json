@@ -1,0 +1,18 @@
+{
+ "add_total_row": 0, 
+ "apply_user_permissions": 1, 
+ "creation": "2015-02-02 13:55:05.895198", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "is_standard": "Yes", 
+ "modified": "2015-02-02 13:55:15.412390", 
+ "modified_by": "Administrator", 
+ "module": "samsungapp", 
+ "name": "Voucher Redeemption Report", 
+ "owner": "Administrator", 
+ "query": "select s.customer as \"Customer Name::150\",c.phone_no as \"Contact No\",c.email_id as \"Email ID::150\",s.discount_amount as  \"Value of Voucher::150\",s.creation as \"Voucher Reedemption Date::150\" ,pr.creation as \"Voucher Creation Date::150\",s.expiry_date as \"Voucher Expiry::150\",\ncoalesce(date_add(pr.creation,interval (select value from tabSingles where field='no_of_days') day) ,'')as \"PIN Expiry::150\",\n(case when s.mark_voucher_as_redeemed=1 then 'redeemed' else case  when date(now())<s.expiry_date then 'Pending' else 'expired' end end)  as \"Voucher Status::150\"\n from `tabSlot Cashier` s,tabCustomer c,`tabPurchase Receipt` pr where s.customer=c.name and pr.pin=s.enter_pin\n", 
+ "ref_doctype": "Slot Cashier", 
+ "report_name": "Voucher Redeemption Report", 
+ "report_type": "Query Report"
+}

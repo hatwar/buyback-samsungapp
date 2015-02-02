@@ -9,164 +9,659 @@
  "document_type": "", 
  "fields": [
   {
-   "allow_on_submit": 0, 
-   "fieldname": "configuration_page", 
+   "fieldname": "device_condition", 
    "fieldtype": "Section Break", 
-   "hidden": 0, 
-   "ignore_user_permissions": 0, 
-   "in_filter": 0, 
-   "in_list_view": 0, 
-   "label": "Configuration Page", 
-   "no_copy": 0, 
+   "label": "Device Condition", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "data_3", 
+   "fieldtype": "HTML", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_4", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "Yes", 
+   "fieldname": "device_active_yes", 
+   "fieldtype": "Data", 
+   "label": "Device Active Yes", 
    "permlevel": 0, 
    "precision": "", 
-   "print_hide": 0, 
-   "read_only": 0, 
-   "report_hide": 0, 
-   "reqd": 0, 
-   "search_index": 0, 
-   "set_only_once": 0
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "column_break_6", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "No", 
+   "fieldname": "device_active_no", 
+   "fieldtype": "Data", 
+   "label": "Device Active No", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "device_active_details", 
+   "fieldtype": "Section Break", 
+   "label": "Device Active Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "html_9", 
+   "fieldtype": "HTML", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "0.0", 
+   "fieldname": "device_active_yes_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Device Active Yes Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_11", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "0.0", 
+   "fieldname": "device_active_no_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Device Active No Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "functional_defects_details", 
+   "fieldtype": "Section Break", 
+   "label": "Functional Defects Details", 
+   "permlevel": 0, 
+   "precision": ""
   }, 
   {
    "allow_on_submit": 0, 
    "default": "Yes", 
-   "fieldname": "functional_defects", 
-   "fieldtype": "Select", 
+   "fieldname": "functional_defects_yes", 
+   "fieldtype": "Data", 
    "hidden": 0, 
    "ignore_user_permissions": 0, 
    "in_filter": 0, 
    "in_list_view": 1, 
    "label": "Functional Defects", 
    "no_copy": 0, 
-   "options": "\nYes\nNo", 
+   "options": "", 
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
   }, 
   {
+   "default": "No", 
+   "fieldname": "functional_defects_no", 
+   "fieldtype": "Data", 
+   "label": "Functional Defects", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "3", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "0.0", 
+   "fieldname": "active_yes_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Active Yes Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "0.0", 
+   "fieldname": "active_no_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Active No Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_18", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "deactivate_yes_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Yes Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "deactivate_no_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Deactive No Percentage", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "screen_condition_details", 
+   "fieldtype": "Section Break", 
+   "label": "Screen Condition details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "allow_on_submit": 0, 
-   "fieldname": "screen_condition", 
-   "fieldtype": "Select", 
+   "default": "Broken Screen", 
+   "fieldname": "broken_screen", 
+   "fieldtype": "Data", 
    "hidden": 0, 
    "ignore_user_permissions": 0, 
    "in_filter": 0, 
    "in_list_view": 1, 
    "label": "Screen Condition", 
    "no_copy": 0, 
-   "options": "\nBroken Screen\nPoor\nJust OK\nExcellent", 
+   "options": "", 
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
   }, 
   {
+   "default": "Poor", 
+   "fieldname": "poor_screen", 
+   "fieldtype": "Data", 
+   "label": "Screen Condition", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "Just OK", 
+   "fieldname": "just_ok_screen", 
+   "fieldtype": "Data", 
+   "label": "Screen Condition", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "Excellent", 
+   "fieldname": "excellent_screen", 
+   "fieldtype": "Data", 
+   "label": "Screen Condition", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "column_break_7", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "a_broken_screen", 
+   "fieldtype": "Percent", 
+   "label": "Active Broken Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "default": "", 
+   "description": "In %", 
+   "fieldname": "a_poor_screen", 
+   "fieldtype": "Percent", 
+   "label": "Active Poor Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "a_just_ok_screen", 
+   "fieldtype": "Percent", 
+   "label": "Active Just OK Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "a_excellent_screen", 
+   "fieldtype": "Percent", 
+   "label": "Active Excellent Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "1", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_broken_screen", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Broken Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_poor_screen", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Poor Screen ", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_just_ok_screen", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Just OK Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_excellent_screen", 
+   "fieldtype": "Data", 
+   "label": "Deactive Excellent Screen", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "body_condition_details", 
+   "fieldtype": "Section Break", 
+   "label": "Body Condition Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "allow_on_submit": 0, 
-   "fieldname": "body_condition", 
-   "fieldtype": "Select", 
+   "default": "Poor", 
+   "fieldname": "poor_body_condition", 
+   "fieldtype": "Data", 
    "hidden": 0, 
    "ignore_user_permissions": 0, 
    "in_filter": 0, 
    "in_list_view": 1, 
    "label": "Body Condition", 
    "no_copy": 0, 
-   "options": "\nPoor \nJust OK\nExcellent", 
+   "options": "", 
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
   }, 
   {
+   "default": "Just OK", 
+   "fieldname": "just_ok_body_condition", 
+   "fieldtype": "Data", 
+   "label": "Body Condition", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "Excellent", 
+   "fieldname": "excellent_body_condition", 
+   "fieldtype": "Data", 
+   "label": "Body Condition", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "column_break_19", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "a_poor_body_condition", 
+   "fieldtype": "Percent", 
+   "label": "Active Poor Body", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "just_ok_body", 
+   "fieldtype": "Percent", 
+   "label": "Active Just OK Body", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "excellent_body", 
+   "fieldtype": "Percent", 
+   "label": "Active Excellent Body", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_44", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_poor_body", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Poor Body", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_just_ok_body", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Just OK Body", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_excellent", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Excellent", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "accessories_details", 
+   "fieldtype": "Section Break", 
+   "label": "Accessories Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "allow_on_submit": 0, 
-   "default": "No", 
+   "default": "Yes", 
    "fieldname": "accessories", 
-   "fieldtype": "Select", 
+   "fieldtype": "Data", 
    "hidden": 0, 
    "ignore_user_permissions": 0, 
    "in_filter": 0, 
    "in_list_view": 1, 
    "label": "Accessories", 
    "no_copy": 0, 
-   "options": "\nYes\nNo", 
+   "options": "", 
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
   }, 
   {
+   "default": "No", 
+   "fieldname": "accessories_no", 
+   "fieldtype": "Data", 
+   "label": "Accessories", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "column_break_26", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "accessories_yes_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Active Yes Accessories", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "accessories_no_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Active No Accessories", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_54", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_yes_accessories", 
+   "fieldtype": "Percent", 
+   "label": "Deactive Yes Accessories", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_no_accessories", 
+   "fieldtype": "Percent", 
+   "label": "Deactive No Accessories", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "capacity_details", 
+   "fieldtype": "Section Break", 
+   "label": "Capacity Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "allow_on_submit": 0, 
-   "fieldname": "capacity", 
-   "fieldtype": "Select", 
+   "default": "8GB", 
+   "fieldname": "8gb", 
+   "fieldtype": "Data", 
    "hidden": 0, 
    "ignore_user_permissions": 0, 
    "in_filter": 0, 
    "in_list_view": 0, 
    "label": "Capacity", 
    "no_copy": 0, 
-   "options": "\n8GB\n16GB\n32GB\n64GB\n128GB\nN/A", 
+   "options": "", 
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0
   }, 
   {
-   "fieldname": "column_break_3", 
+   "default": "16GB", 
+   "fieldname": "16gb", 
+   "fieldtype": "Data", 
+   "label": "Capacity", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "32GB", 
+   "fieldname": "32gb", 
+   "fieldtype": "Data", 
+   "label": "Capacity", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "64GB", 
+   "fieldname": "64gb", 
+   "fieldtype": "Data", 
+   "label": "Capacity", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "128GB", 
+   "fieldname": "128gb", 
+   "fieldtype": "Data", 
+   "label": "Capacity", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "N/A", 
+   "fieldname": "not_applicable", 
+   "fieldtype": "Data", 
+   "label": "Capacity", 
+   "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "fieldname": "column_break_31", 
    "fieldtype": "Column Break", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
-   "fieldname": "d_percenatge", 
+   "description": "In %", 
+   "fieldname": "a_percentage", 
    "fieldtype": "Percent", 
-   "label": "Defect Percenatge", 
+   "label": "Active 8GB", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
-   "fieldname": "s_percentage", 
+   "description": "In %", 
+   "fieldname": "a_one_percentage", 
    "fieldtype": "Percent", 
-   "label": "Screen Condition Percentage", 
+   "label": "Active 16GB", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
-   "fieldname": "body_condition_percentage", 
+   "description": "In %", 
+   "fieldname": "a_two_percentage", 
    "fieldtype": "Percent", 
-   "label": "Body condition Percentage", 
+   "label": "Active 32GB", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
-   "fieldname": "accessories_percentage", 
+   "description": "In %", 
+   "fieldname": "a_tr_percentage", 
    "fieldtype": "Percent", 
-   "label": "Accessories Percentage", 
+   "label": "Active 64GB", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
-   "fieldname": "capacity_percentage", 
+   "description": "In %", 
+   "fieldname": "a_fr_percentage", 
    "fieldtype": "Percent", 
-   "label": "Capacity Percentage", 
+   "label": "Active 128GB", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "not_applicable_percentage", 
+   "fieldtype": "Percent", 
+   "label": "Active N/A", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "column_break_71", 
+   "fieldtype": "Column Break", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_8gb", 
+   "fieldtype": "Percent", 
+   "label": "Deactive 8GB", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_16gb", 
+   "fieldtype": "Percent", 
+   "label": "Deactive 16GB", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_32gb", 
+   "fieldtype": "Percent", 
+   "label": "Deactive 32GB", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_64gb", 
+   "fieldtype": "Data", 
+   "label": "Deactive 64GB", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "deactive_128gb", 
+   "fieldtype": "Percent", 
+   "label": "Deactive 128GB", 
+   "options": "In %", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "description": "In %", 
+   "fieldname": "deactive_na", 
+   "fieldtype": "Percent", 
+   "label": "Deactive N/A", 
    "permlevel": 0, 
    "precision": ""
   }
@@ -176,9 +671,9 @@
  "in_create": 0, 
  "in_dialog": 0, 
  "is_submittable": 0, 
- "issingle": 0, 
+ "issingle": 1, 
  "istable": 0, 
- "modified": "2015-01-31 09:20:15.176022", 
+ "modified": "2015-02-02 14:57:05.234763", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Deduction Percentage Criteria", 

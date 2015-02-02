@@ -29,9 +29,8 @@ def check_pin(pin):
 			expiry_date=" "
 		if buy_back_requisition_ref:
 			customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1,debug=1)
-			frappe.errprint(customer_details)
-			frappe.errprint(customer_details[0]['customer'])
-			return [{
+			if customer_details:
+				return [{
 					"customer": customer_details[0]['customer'],
 					"id_type":customer_details[0]['id_type'],
 					"id_no":customer_details[0]['id_no'],
@@ -40,11 +39,27 @@ def check_pin(pin):
 					
 				}]	
 
-def send_email(pin):
-	frappe.errprint("in the send email")
 
-
-
-
-
-	
+@frappe.whitelist()
+def send_reedemed_email(Voucher, method):
+	from frappe.utils.email_lib import sendmail
+	frappe.errprint("inth send_reedemed_email")
+	recipients=[]
+	expiry_date=''
+	if Voucher.customer:
+		customer=frappe.db.sql("""select email_id from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1,debug=1)
+		if customer:
+			recipients.append(customer[0][0])	
+	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
+	if recipient:
+		for resp in recipient:
+			recipients.append(resp['parent'])
+	frappe.errprint(recipients)		
+	if recipients:
+		subject = "Device Received"
+		message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
+		<p>Value of the voucher :%s</p>
+		<p>Redemption Date:%s </p>
+		<p>Thank You,</p>
+		""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		sendmail(recipients, subject=subject, msg=message)	

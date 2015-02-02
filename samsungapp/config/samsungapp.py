@@ -20,6 +20,11 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+					"name": "Purchase Receipt",
+					"description": _("Goods received from Suppliers."),
+				},
+				{
+					"type": "doctype",
 					"name": "Slot Cashier",
 					"icon": "icon-sitemap",
 					"label": _("Voucher Redeemption Form"),
@@ -49,6 +54,16 @@ def get_data():
 					"type": "report",
 					"is_query_report": True,
 					"name": "Buy Back Report",
+					"doctype": "Item"
+				},]},
+				{
+			"label": _("Main Report"),
+			"icon": "icon-list",
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Voucher Redeemption Report",
 					"doctype": "Item"
 				},]}
 		
