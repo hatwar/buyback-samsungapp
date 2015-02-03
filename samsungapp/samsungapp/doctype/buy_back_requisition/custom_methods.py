@@ -10,11 +10,13 @@ from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,add_days,c
 @frappe.whitelist()
 def generate_pin(PR, method):
 	frappe.errprint("in the generate pin")
+	frappe.errprint(PR.name)
 	import string
 	import random
 	code=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+	frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(code,PR.name))
 	# PR.pin=code
-	PR.update({"pin":code})
+	# PR.update({"pin":code})
 	frappe.errprint(code)
 	frappe.errprint("code")
 	send_email(PR, method,code)
@@ -22,6 +24,7 @@ def generate_pin(PR, method):
 
 
 def send_email(PR, method,code):
+	frappe.errprint(code)
 	recipients=[]
 	expiry_date=''
 	customer=frappe.db.sql("""select email_id from `tabBuy Back Requisition` where name='%s' """%(PR.buy_back_requisition_ref),as_list=1,debug=1)

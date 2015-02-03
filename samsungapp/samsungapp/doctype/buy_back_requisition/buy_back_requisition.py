@@ -60,13 +60,15 @@ def get_device_active_Details(active):
 def get_functional_defects_details(functional_defects,active):
 	frappe.errprint(functional_defects)
 	frappe.errprint(active)
+	functional_value=[]
 	if active=='Yes':
 		if functional_defects=='Yes':
 			functional_value=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 						and field='active_yes_percentage' """)
 		elif functional_defects=='No':
 			functional_value=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
-						and field='active_no_percentage' """)	
+						and field='active_no_percentage' """)
+			frappe.errprint(functional_value)	
 		else:
 			pass
 
@@ -79,6 +81,7 @@ def get_functional_defects_details(functional_defects,active):
 						and field='deactivate_no_percentage' """)
 		else:
 			pass
+			
 
 	if len(functional_value)>0:
 		return functional_value[0][0]
@@ -88,7 +91,7 @@ def get_functional_defects_details(functional_defects,active):
 @frappe.whitelist()
 def get_condition_of_screen(screen_condition,active):
 	frappe.errprint(screen_condition)
-	screen='test'
+	screen=[]
 	if active=='Yes':
 		frappe.errprint("in active yes")
 		if screen_condition=='Broken Screen':
@@ -126,6 +129,7 @@ def get_condition_of_screen(screen_condition,active):
 
 @frappe.whitelist()
 def get_condition_of_device_body(device_body,active):
+	body_condition=[]
 	if active=='Yes':
 		if device_body=='Poor':
 			body_condition=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
@@ -157,6 +161,7 @@ def get_condition_of_device_body(device_body,active):
 
 @frappe.whitelist()
 def get_accessories_details(accessories,active):
+	accessories_details=[]
 	if active=='Yes':
 		if accessories=='Yes':
 			accessories_details=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
@@ -184,6 +189,7 @@ def get_accessories_details(accessories,active):
 
 @frappe.whitelist()
 def get_capacity(capacity,active):
+	capacity_details=[]
 	if active=='Yes':
 		if capacity=='8GB':
 			capacity_details=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'

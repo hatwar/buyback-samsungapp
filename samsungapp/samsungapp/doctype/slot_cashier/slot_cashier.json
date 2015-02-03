@@ -42,41 +42,55 @@
    "fieldtype": "Data", 
    "label": "Customer", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "fieldname": "id_type", 
    "fieldtype": "Data", 
    "label": "Id Type", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "fieldname": "id_number", 
    "fieldtype": "Data", 
    "label": "Id Number", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "fieldname": "discount_amount", 
    "fieldtype": "Int", 
    "label": "Discount Amount", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "fieldname": "expiry_date", 
    "fieldtype": "Date", 
    "label": "Expiry Date", 
    "permlevel": 0, 
+   "precision": "", 
+   "read_only": 1
+  }, 
+  {
+   "default": "0", 
+   "fieldname": "verified", 
+   "fieldtype": "Check", 
+   "label": "Verified", 
+   "permlevel": 0, 
    "precision": ""
   }, 
   {
    "default": "", 
-   "fieldname": "verified", 
-   "fieldtype": "Check", 
-   "label": "Verified", 
+   "depends_on": "eval:doc.verified==0", 
+   "fieldname": "comments1", 
+   "fieldtype": "Small Text", 
+   "label": "Comments", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -151,7 +165,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-31 10:49:42.791383", 
+ "modified": "2015-02-03 06:27:16.036542", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Slot Cashier", 

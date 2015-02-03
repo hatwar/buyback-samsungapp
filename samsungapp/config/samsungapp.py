@@ -43,6 +43,13 @@ def get_data():
 					"icon": "icon-sitemap",
 					"label": _("Pin Expiry Details"),
 					"description": _("Pin Expiry Details"),
+				},
+				{
+					"type": "doctype",
+					"name": "Deduction Percentage Criteria",
+					"icon": "icon-sitemap",
+					"label": _("Deduction Percentage Criteria"),
+					"description": _("Configuration Page"),
 				}
 			]
 		},

@@ -644,7 +644,7 @@
   {
    "description": "In %", 
    "fieldname": "deactive_64gb", 
-   "fieldtype": "Data", 
+   "fieldtype": "Percent", 
    "label": "Deactive 64GB", 
    "permlevel": 0, 
    "precision": ""
@@ -673,7 +673,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2015-02-02 14:57:05.234763", 
+ "modified": "2015-02-03 06:21:13.854250", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Deduction Percentage Criteria", 

@@ -234,6 +234,20 @@
    "precision": ""
   }, 
   {
+   "fieldname": "iemi_details", 
+   "fieldtype": "Section Break", 
+   "label": "IEMI Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "iemi_number", 
+   "fieldtype": "Data", 
+   "label": "IEMI Number", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "device_picture", 
    "fieldtype": "Section Break", 
    "label": " Images to be captured", 
@@ -361,7 +375,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-02 16:03:20.405787", 
+ "modified": "2015-02-03 06:22:56.884080", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 
