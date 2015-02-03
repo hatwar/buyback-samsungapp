@@ -6,6 +6,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils.email_lib import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr
+from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 
 class BuyBackRequisition(Document):
 	pass
@@ -31,8 +32,8 @@ def save(BuyBackRequisition, method):
 		poc.item_code=BuyBackRequisition.item_code
 		poc.schedule_date=nowdate()
 		poc.rate=BuyBackRequisition.offered_price
-		po.docstatus=1
-		po.insert(ignore_permissions=True)
+		po.save(ignore_permissions=True)
+		po.submit()
 		frappe.errprint(po.name)
 		send_device_recv_email(BuyBackRequisition, method)
 
@@ -247,14 +248,48 @@ def send_device_recv_email(BuyBackRequisition, method):
 			recipients.append(resp['parent'])
 	if recipients:
 		subject = "Device Received"
-		message ="""<h3>Dear </h3><p>We received your device at Matrix store, below are the details</p>
+		message ="""<h3>Dear %s</h3><p>We received your device at Matrix store, below are the details</p>
 		<p>Device Received :%s</p>
 		<p>Received Date:%s </p>
 		<p>Offered Price:%s</p>
 		<p>Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.</p>
 		<p>Thank You,</p>
-		""" %(BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
-		sendmail(recipients, subject=subject, msg=message)	
+		""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+		sendmail(recipients, subject=subject, msg=message)
+
+
+def send_sms(BuyBackRequisition, method):
+	frappe.errprint("in the send sms")
+	recipients=[]
+
+	frappe.errprint(type((BuyBackRequisition.phone_no)))
+	# if recipients:
+	# 	subject = "Device Received"
+	# 	message ="""<h3>Dear %s</h3><p>We received your device at Matrix store, below are the details</p>
+	# 	<p>Device Received :%s</p>
+	# 	<p>Received Date:%s </p>
+	# 	<p>Offered Price:%s</p>
+	# 	<p>Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.</p>
+	# 	<p>Thank You,</p>
+	# 	""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+	# # recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
+	# if BuyBackRequisition.phone_no:
+	# 	recipients.append(BuyBackRequisition.phone_no)
+
+	# 	for resp in recipient:
+	# 		recipients.append(resp['parent'])
+	# receiver_list = []
+
+	# if not self.message:
+	# 	frappe.errprint("in self.message")
+	# 	msgprint(_("Please enter message before sending"))
+	# else:
+	# 	frappe.errprint("in the else")
+	# 	receiver_list = self.get_receiver_nos()
+	# if receiver_list:
+	# 	frappe.errprint("in the receiver_list sms")
+	# 	send_sms(receiver_list, cstr(self.message))
+
 
 
 
