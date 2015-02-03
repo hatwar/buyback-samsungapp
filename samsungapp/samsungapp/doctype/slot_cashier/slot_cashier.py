@@ -6,6 +6,7 @@ import frappe
 from frappe.model.document import Document
 from frappe import msgprint
 from frappe.utils import today,add_days,cint,nowdate,formatdate,cstr
+from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 
 
 class SlotCashier(Document):
@@ -63,3 +64,26 @@ def send_reedemed_email(Voucher, method):
 		<p>Thank You,</p>
 		""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
 		sendmail(recipients, subject=subject, msg=message)	
+
+
+
+@frappe.whitelist()
+def send_redeemed_sms(Voucher, method):
+	recipients=[]
+	if Voucher.customer:
+		customer=frappe.db.sql("""select phone_no from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1,debug=1)
+		if customer:
+			recipients.append(customer[0][0])	
+	frappe.errprint(recipients)		
+	if recipients:
+		message ="""Dear %s
+		Your voucher is redeemed against the PIN.
+		Value of the voucher :%s
+		Redemption Date:%s 
+		Thank You.""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		send_sms(recipients,cstr(message))	
+
+
+
+
+

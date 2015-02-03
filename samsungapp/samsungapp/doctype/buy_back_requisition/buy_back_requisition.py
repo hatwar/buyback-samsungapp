@@ -17,7 +17,19 @@ class BuyBackRequisition(Document):
 def test(BuyBackRequisition, method):
 	frappe.errprint("BuyBackRequisition.name")
 	frappe.errprint(BuyBackRequisition.customer_acceptance)
+# 
 
+
+@frappe.whitelist()
+def get_basic_price(item_code,price_list):
+	basic_price=frappe.db.sql("""select price_list_rate from `tabItem Price` where item_code='%s'
+					and price_list='%s' """%(item_code,price_list),as_dict=1,debug=1)
+	frappe.errprint(basic_price)
+	if basic_price:
+		return [{
+						"basic_price": basic_price[0]['price_list_rate'],
+						
+					}]
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
@@ -32,7 +44,7 @@ def save(BuyBackRequisition, method):
 		poc.item_code=BuyBackRequisition.item_code
 		poc.schedule_date=nowdate()
 		poc.rate=BuyBackRequisition.offered_price
-		po.save(ignore_permissions=True)
+		po.save()
 		po.submit()
 		frappe.errprint(po.name)
 		send_device_recv_email(BuyBackRequisition, method)
@@ -258,37 +270,19 @@ def send_device_recv_email(BuyBackRequisition, method):
 		sendmail(recipients, subject=subject, msg=message)
 
 
-def send_sms(BuyBackRequisition, method):
-	frappe.errprint("in the send sms")
+def send_to_sms(BuyBackRequisition, method):
 	recipients=[]
-
-	frappe.errprint(type((BuyBackRequisition.phone_no)))
-	# if recipients:
-	# 	subject = "Device Received"
-	# 	message ="""<h3>Dear %s</h3><p>We received your device at Matrix store, below are the details</p>
-	# 	<p>Device Received :%s</p>
-	# 	<p>Received Date:%s </p>
-	# 	<p>Offered Price:%s</p>
-	# 	<p>Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.</p>
-	# 	<p>Thank You,</p>
-	# 	""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
-	# # recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
-	# if BuyBackRequisition.phone_no:
-	# 	recipients.append(BuyBackRequisition.phone_no)
-
-	# 	for resp in recipient:
-	# 		recipients.append(resp['parent'])
-	# receiver_list = []
-
-	# if not self.message:
-	# 	frappe.errprint("in self.message")
-	# 	msgprint(_("Please enter message before sending"))
-	# else:
-	# 	frappe.errprint("in the else")
-	# 	receiver_list = self.get_receiver_nos()
-	# if receiver_list:
-	# 	frappe.errprint("in the receiver_list sms")
-	# 	send_sms(receiver_list, cstr(self.message))
+	if BuyBackRequisition.phone_no:
+		phone_no=eval(BuyBackRequisition.phone_no)
+		recipients.append(cstr(phone_no))
+		message ="""Dear %s
+			We received your device at Matrix store, below are the details
+			Device Received :%s
+			Received Date:%s 
+			Offered Price:%s
+			Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
+			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+		# send_sms(recipients,cstr(message))
 
 
 

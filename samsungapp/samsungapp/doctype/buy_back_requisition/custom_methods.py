@@ -16,11 +16,10 @@ def generate_pin(PR, method):
 	import random
 	code=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
 	frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(code,PR.name))
-	# PR.pin=code
-	# PR.update({"pin":code})
 	frappe.errprint(code)
 	frappe.errprint("code")
 	send_email(PR, method,code)
+	send_pin_sms(PR, method,code)
 
 
 
@@ -33,11 +32,6 @@ def send_email(PR, method,code):
 	if customer:
 		recipients.append(cstr(customer[0][0]))
 		cust=cstr(customer[0][1])
-	# recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
-	# if recipient:
-	# 	for resp in recipient:
-	# 		recipients.append(resp['parent'])
-
 	no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
 	if no_of_days:
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
@@ -52,7 +46,34 @@ def send_email(PR, method,code):
 		<p>Thank You,</p>
 		""" %(cust,code,formatdate(expiry_date))
 		sendmail(recipients, subject=subject, msg=message)	
-	# recipients = frappe.db.get_value("", None, "send_notifications_to").split(",")
+
+
+
+
+def send_pin_sms(PR, method,code):
+	recipients=[]
+	customer=frappe.db.sql("""select phone_no ,customer from `tabBuy Back Requisition` where name='%s' """%(PR.buy_back_requisition_ref),as_list=1,debug=1)
+	if customer:
+		recipients.append(cstr(customer[0][0]))
+		cust=cstr(customer[0][1])
+	no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
+	if no_of_days:
+		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
+	frappe.errprint("recipients")
+	frappe.errprint(recipients)
+	if recipients:
+		message ="""Dear %s
+		Below PIN is generated against the device sold at Matrix store
+		PIN:%s
+		PIN Expiry Date:%s 
+		Kindly redeem the voucher before the expiry date.
+		Thank You.""" %(cust,code,formatdate(expiry_date))
+		frappe.errprint(message)
+		send_sms(recipients,cstr(message))
+
+
+
+
 
 
 
