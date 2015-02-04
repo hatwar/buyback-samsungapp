@@ -10,13 +10,10 @@ from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 
 @frappe.whitelist()
 def generate_pin(PR, method):
-	frappe.errprint("in the generate pin")
-	frappe.errprint(PR.name)
 	import string
 	import random
 	code=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
 	frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(code,PR.name))
-	frappe.errprint(code)
 	frappe.errprint("code")
 	send_email(PR, method,code)
 	send_pin_sms(PR, method,code)
@@ -24,7 +21,6 @@ def generate_pin(PR, method):
 
 
 def send_email(PR, method,code):
-	frappe.errprint(code)
 	recipients=[]
 	expiry_date=''
 	cust=''
@@ -35,8 +31,6 @@ def send_email(PR, method,code):
 	no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
 	if no_of_days:
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
-	frappe.errprint("recipients")
-	frappe.errprint(recipients)
 	if recipients:
 		subject = "Voucher Generation"
 		message ="""<h3>Dear %s</h3><p>Below PIN is generated against the device sold at Matrix store </p>
@@ -59,8 +53,6 @@ def send_pin_sms(PR, method,code):
 	no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
 	if no_of_days:
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
-	frappe.errprint("recipients")
-	frappe.errprint(recipients)
 	if recipients:
 		message ="""Dear %s
 		Below PIN is generated against the device sold at Matrix store
@@ -68,7 +60,6 @@ def send_pin_sms(PR, method,code):
 		PIN Expiry Date:%s 
 		Kindly redeem the voucher before the expiry date.
 		Thank You.""" %(cust,code,formatdate(expiry_date))
-		frappe.errprint(message)
 		send_sms(recipients,cstr(message))
 
 

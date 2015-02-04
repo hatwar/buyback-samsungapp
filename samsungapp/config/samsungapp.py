@@ -27,7 +27,7 @@ def get_data():
 					"type": "doctype",
 					"name": "Slot Cashier",
 					"icon": "icon-sitemap",
-					"label": _("Voucher Redeemption Form"),
+					"label": _("Voucher Redemption Form"),
 					"description": _("Slot Cashier."),
 				},
 				{
@@ -70,6 +70,7 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
+					"label": _("Voucher Redemption Report"),
 					"name": "Voucher Redeemption Report",
 					"doctype": "Item"
 				},]}

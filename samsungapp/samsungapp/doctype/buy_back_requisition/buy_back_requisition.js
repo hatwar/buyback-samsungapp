@@ -3,27 +3,38 @@ cur_frm.add_fetch("customer", "customer_name", "customer_name");
 cur_frm.add_fetch("customer", "email_id", "email_id");
 cur_frm.add_fetch("customer", "phone_no", "phone_no");
 
-// cur_frm.add_fetch("item_code", "basic_price", "basic_price");
-
 cur_frm.cscript.item_code = function(doc,cdt,cdn){
-	console.log("in basic price")
 	frappe.call({
             	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_basic_price",
             	    args:{"item_code":doc.item_code,
             	    	  "price_list":doc.price_list
             				},
             	    callback:function(r){
-            	    	console.log(r.message)
-						if (r.message){
+            	    	if (r.message){
 							doc.basic_price=r.message[0]['basic_price']
+							doc.fix_price=r.message[0]['basic_price']
 							refresh_field('basic_price');
-							
+							refresh_field('fix_price');
+														
 						}
                 	}
         	})
-	
-
 	}
+
+	cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
+		var value = Math.floor(doc.iemi_number);
+		if (Math.floor(doc.iemi_number) == value) {
+			if (! /^[0-9]{15}$/.test(doc.iemi_number)) {
+			  msgprint("Please Enter  exactly 15 digits!");
+			  return false;
+			}
+			} else {
+			  msgprint("IEMI Requires Numeric Values ");
+			}
+	}
+
+
+	
 
 
 cur_frm.cscript.basic_price = function(doc,cdt,cdn){
@@ -60,6 +71,8 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
 							else if (r.message>0){
 								var value = r.message/100
 								console.log(value)
+								doc.basic_price=doc.fix_price
+								refresh_field('basic_price');
 								price=value*doc.basic_price
 								doc.device_active=price
 								refresh_field('device_active');
@@ -161,7 +174,6 @@ cur_frm.cscript.condition_of_the_screen = function(doc,cdt,cdn){
 }
 
 cur_frm.cscript.condition_of_device_body = function(doc,cdt,cdn){
-	//console.log("in condition_of_device_body")
 	if (doc.is_the_device_active=='Yes' || doc.is_the_device_active=='No'){
 		frappe.call({
             	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_condition_of_device_body",
@@ -248,31 +260,23 @@ cur_frm.cscript.capacity = function(doc,cdt,cdn){
 
 
 cur_frm.cscript.update_totals=function(doc,cdt,cdn){
-	console.log("update totals")
 	var total=0.0;
 	total=doc.functional_defects+doc.device_active+doc.screen_condition+doc.body_condition+doc.accessories+doc.device_capacity
 	var doc = locals[doc.doctype][doc.name];
 	doc.estimated_price =doc.basic_price-total;
 	doc.offered_price=doc.basic_price-total;
-	console.log(doc.estimated_price)
 	refresh_field('estimated_price');
 	refresh_field('offered_price');
 
 }
 
 cur_frm.cscript.captured_device_image = function(doc, cdt, cdn){
-	console.log("in the image");
-	console.log(doc.captured_device_image)
 	doc.image='<table style="width: 100%; table-layout: fixed;"><tr><td style="width:110px"><img src="'+doc.captured_device_image+'" width="100px"></td></tr></table>'
-	// doc.image='<table style="width: 100%; table-layout: fixed;"><tr><td style="width:100px"><img src="'+doc.captured_device_image+'" width="100px"></td></tr></table>'
 	refresh_field("image");
 }
 
 cur_frm.cscript.customer_image = function(doc, cdt, cdn){
-	console.log("in the image");
-	console.log(doc.cust_image)
 	doc.cust_image='<table style="width: 100%; table-layout: fixed;"><tr><td style="width:110px"><img src="'+doc.customer_image+'" width="100px"></td></tr></table>'
-	// doc.image='<table style="width:100%; table-layout: fixed;"><tr><td style="width:100px"><img src="'+doc.cust_image+'" width="100px"></td></tr></table>'
 	refresh_field("cust_image");
 }
 
@@ -280,6 +284,8 @@ cur_frm.cscript.estimated_price=cur_frm.cscript.offered_price = function(doc, cd
 	if(doc.offered_price>doc.estimated_price)
 	{
 		msgprint(__("Offered Price Should be less than Estimated Price."));
+		cur_frm.set_value("offered_price", '')
 		
+	
 	}
 }

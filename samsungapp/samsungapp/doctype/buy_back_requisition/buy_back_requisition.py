@@ -7,17 +7,11 @@ from frappe.model.document import Document
 from frappe.utils.email_lib import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
+from frappe import msgprint
 
 class BuyBackRequisition(Document):
 	pass
 
-
-
-@frappe.whitelist()
-def test(BuyBackRequisition, method):
-	frappe.errprint("BuyBackRequisition.name")
-	frappe.errprint(BuyBackRequisition.customer_acceptance)
-# 
 
 
 @frappe.whitelist()
@@ -33,8 +27,6 @@ def get_basic_price(item_code,price_list):
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
-	frappe.errprint("in the save")
-	frappe.errprint(BuyBackRequisition.customer_acceptance)
 	if BuyBackRequisition.customer_acceptance=='Yes':
 		po = frappe.new_doc('Purchase Order')
 		po.supplier= 'Slot buy back program'
@@ -46,7 +38,6 @@ def save(BuyBackRequisition, method):
 		poc.rate=BuyBackRequisition.offered_price
 		po.save()
 		po.submit()
-		frappe.errprint(po.name)
 		send_device_recv_email(BuyBackRequisition, method)
 
 
@@ -71,8 +62,8 @@ def get_device_active_Details(active):
 
 @frappe.whitelist()
 def get_functional_defects_details(functional_defects,active):
-	frappe.errprint(functional_defects)
-	frappe.errprint(active)
+	# frappe.errprint(functional_defects)
+	# frappe.errprint(active)
 	functional_value=[]
 	if active=='Yes':
 		if functional_defects=='Yes':
@@ -275,14 +266,10 @@ def send_to_sms(BuyBackRequisition, method):
 	if BuyBackRequisition.phone_no:
 		phone_no=eval(BuyBackRequisition.phone_no)
 		recipients.append(cstr(phone_no))
-		message ="""Dear %s
-			We received your device at Matrix store, below are the details
-			Device Received :%s
-			Received Date:%s 
-			Offered Price:%s
-			Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
+		message ="""Dear %s,We received your device at Matrix store, below are the details
+			Device Received :%s,Received Date:%s,Offered Price:%s,Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
 			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
-		# send_sms(recipients,cstr(message))
+		send_sms(recipients,cstr(message))
 
 
 
