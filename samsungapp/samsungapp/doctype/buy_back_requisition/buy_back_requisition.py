@@ -40,6 +40,7 @@ def save(BuyBackRequisition, method):
 		poc.rate=BuyBackRequisition.offered_price
 		po.save()
 		po.submit()
+		msgprint(_("{0} is Created Successfully.").format(po.name))
 		send_device_recv_email(BuyBackRequisition, method)
 
 

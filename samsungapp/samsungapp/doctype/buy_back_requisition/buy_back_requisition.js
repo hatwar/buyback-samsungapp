@@ -271,7 +271,7 @@ cur_frm.cscript.update_totals=function(doc,cdt,cdn){
 }
 
 cur_frm.cscript.captured_device_image = function(doc, cdt, cdn){
-	console.log(doc.captured_device_image)
+	// console.log(doc.captured_device_image)
 	if(!/(\.png|\.jpg|\.gif)$/i.test(doc.captured_device_image))
 	{
 		cur_frm.set_value("captured_device_image", '')
