@@ -1,31 +1,44 @@
-
-
-
-
-
-
 cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
-	console.log("in the image");
-	console.log(doc.enter_pin);
+	return cur_frm.call({
+			doc: cur_frm.doc,
+			method: "check_pin",
+			args: doc.enter_pin,
+			callback: function(r) {
+				if(r.message['ret']=='ret') {
+					cur_frm.set_value("enter_pin", '')
+					refresh_field('enter_pin')
+				}
+				cur_frm.set_value("customer", r.message['customer'])
+				cur_frm.set_value("id_type", r.message['id_type'])
+				cur_frm.set_value("id_number", r.message['id_no'])
+				cur_frm.set_value("discount_amount", r.message['offered_price'])
+				cur_frm.set_value("expiry_date", r.message['expiry_date'])
 
-	return  frappe.call({
-		method: 'samsungapp.samsungapp.doctype.slot_cashier.slot_cashier.check_pin',
-		args: {
-			pin: doc.enter_pin
-		},
-		callback: function(r) {
-			console.log(r.message)
-				doc.id_type =r.message[0]['id_type'];
-				doc.id_number=r.message[0]['id_no'];
-				doc.customer=r.message[0]['customer']
-				doc.discount_amount=r.message[0]['offered_price']
-				doc.expiry_date=r.message[0]['expiry_date']
 				refresh_field('id_type');
 				refresh_field('id_number');
 				refresh_field('customer');
-				refresh_field('expiry_date')
-				refresh_field('discount_amount')
-		}
-	});
-
+				refresh_field('expiry_date');
+				refresh_field('discount_amount');
+				cur_frm.refresh();
+				
+			},
+		
+		})
 }
+
+cur_frm.cscript.iemi_no = function(doc,cdt,cdn){
+		var value = Math.floor(doc.iemi_no);
+		if (Math.floor(doc.iemi_no) == value) {
+			if (! /^[0-9]{15}$/.test(doc.iemi_no)) {
+			  msgprint("Please Enter  exactly 15 digits!");
+			  return false;
+			}
+			} else {
+			  msgprint("IEMI Requires Numeric Values ");
+			}
+
+	}
+
+
+
+

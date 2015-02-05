@@ -7,7 +7,7 @@ from frappe.model.document import Document
 from frappe.utils.email_lib import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
-from frappe import msgprint
+from frappe import msgprint, _
 
 class BuyBackRequisition(Document):
 	pass
@@ -18,12 +18,14 @@ class BuyBackRequisition(Document):
 def get_basic_price(item_code,price_list):
 	basic_price=frappe.db.sql("""select price_list_rate from `tabItem Price` where item_code='%s'
 					and price_list='%s' """%(item_code,price_list),as_dict=1,debug=1)
-	frappe.errprint(basic_price)
 	if basic_price:
 		return [{
-						"basic_price": basic_price[0]['price_list_rate'],
+					"basic_price": basic_price[0]['price_list_rate'],
+				}]
+	else:
+		msgprint(_("Please Set The Basic Item Price"), raise_exception=1)
 						
-					}]
+
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
@@ -72,7 +74,7 @@ def get_functional_defects_details(functional_defects,active):
 		elif functional_defects=='No':
 			functional_value=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 						and field='active_no_percentage' """)
-			frappe.errprint(functional_value)	
+			# frappe.errprint(functional_value)	
 		else:
 			pass
 
@@ -94,10 +96,10 @@ def get_functional_defects_details(functional_defects,active):
 
 @frappe.whitelist()
 def get_condition_of_screen(screen_condition,active):
-	frappe.errprint(screen_condition)
+	# frappe.errprint(screen_condition)
 	screen=[]
 	if active=='Yes':
-		frappe.errprint("in active yes")
+		# frappe.errprint("in active yes")
 		if screen_condition=='Broken Screen':
 			screen=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 						and field='a_broken_screen' """)
@@ -198,7 +200,7 @@ def get_capacity(capacity,active):
 		if capacity=='8GB':
 			capacity_details=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 						and field='a_percentage' """)
-			frappe.errprint(capacity_details)
+			# frappe.errprint(capacity_details)
 		elif capacity=='16GB':
 			capacity_details=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 						and field='a_one_percentage' """)

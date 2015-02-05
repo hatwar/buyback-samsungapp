@@ -673,7 +673,7 @@
  "is_submittable": 0, 
  "issingle": 1, 
  "istable": 0, 
- "modified": "2015-02-03 06:21:13.854250", 
+ "modified": "2015-02-05 06:48:37.767769", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Deduction Percentage Criteria", 
@@ -693,7 +693,7 @@
    "print": 0, 
    "read": 1, 
    "report": 0, 
-   "role": "All", 
+   "role": "Administrator", 
    "set_user_permissions": 0, 
    "submit": 0, 
    "write": 1

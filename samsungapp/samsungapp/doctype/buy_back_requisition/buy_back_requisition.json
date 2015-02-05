@@ -174,7 +174,8 @@
    "fieldtype": "Float", 
    "label": "Estimated/ Recommended Price", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 0
   }, 
   {
    "fieldname": "offered_price", 
@@ -396,7 +397,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-04 12:34:06.780271", 
+ "modified": "2015-02-05 14:38:23.595331", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 

@@ -141,9 +141,9 @@
    "precision": ""
   }, 
   {
-   "fieldname": "imei_no", 
+   "fieldname": "iemi_no", 
    "fieldtype": "Data", 
-   "label": "IMEI No", 
+   "label": "IEMI No", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -165,7 +165,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-04 07:13:54.081510", 
+ "modified": "2015-02-05 11:53:56.091342", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Slot Cashier", 
