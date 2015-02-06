@@ -61,7 +61,8 @@
    "fieldtype": "Float", 
    "label": "Basic Price", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "3", 
+   "read_only": 1
   }, 
   {
    "fieldname": "fix_price", 
@@ -397,7 +398,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-05 14:38:23.595331", 
+ "modified": "2015-02-06 09:36:34.238638", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 

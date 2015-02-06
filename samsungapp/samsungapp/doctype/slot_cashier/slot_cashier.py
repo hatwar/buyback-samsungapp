@@ -15,7 +15,7 @@ class SlotCashier(Document):
 
 
 	def check_pin(self,pin):
-		slot_cashier=frappe.db.sql("""select name,verified,mark_voucher_as_redeemed,expiry_date from `tabSlot Cashier` where enter_pin='%s' """%(pin),as_dict=1,debug=1)
+		slot_cashier=frappe.db.sql("""select name,verified,mark_voucher_as_redeemed,expiry_date from `tabSlot Cashier` where enter_pin='%s' """%(pin),as_dict=1)
 		# frappe.errprint(slot_cashier)
 		if slot_cashier:
 			for slot in slot_cashier:
@@ -28,7 +28,7 @@ class SlotCashier(Document):
 					return  {"ret":'ret'}
 
 		else:
-			buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(pin),as_dict=1,debug=1)
+			buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(pin),as_dict=1)
 			no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
 			# frappe.errprint(no_of_days)
 			if no_of_days:
@@ -36,7 +36,7 @@ class SlotCashier(Document):
 			else:
 				expiry_date=" "
 			if buy_back_requisition_ref:
-				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1,debug=1)
+				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
 				if customer_details:
 					return {
 						"customer": customer_details[0]['customer'],
@@ -55,21 +55,33 @@ def send_reedemed_email(Voucher, method):
 	recipients=[]
 	expiry_date=''
 	if Voucher.customer:
-		customer=frappe.db.sql("""select email_id from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1,debug=1)
+		customer=frappe.db.sql("""select email_id from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1)
 		if customer:
 			recipients.append(customer[0][0])	
-	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
+	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1)
 	if recipient:
 		for resp in recipient:
 			recipients.append(resp['parent'])
 	# frappe.errprint(recipients)		
 	if recipients:
 		subject = "Voucher Redemption"
-		message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
-		<p>Value of the voucher :%s</p>
-		<p>Redemption Date:%s </p>
-		<p>Thank You,</p>
-		""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		if Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==1:
+			message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
+			<p>Value of the voucher :%s</p>
+			<p>Redemption Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		elif Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==0:
+			message ="""<h3>Dear %s </h3><p>Your voucher is verified but not redeemed against the PIN </p>
+			<p>Value of the voucher :%s</p>
+			<p>Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		else:message ="""<h3>Dear %s </h3><p>Your voucher is not redeemed against the PIN </p>
+			<p>Please Verify the Details</p>
+			<p>Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,formatdate(Voucher.creation))
 		sendmail(recipients, subject=subject, msg=message)	
 
 
@@ -78,16 +90,27 @@ def send_reedemed_email(Voucher, method):
 def send_redeemed_sms(Voucher, method):
 	recipients=[]
 	if Voucher.customer:
-		customer=frappe.db.sql("""select phone_no from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1,debug=1)
+		customer=frappe.db.sql("""select phone_no from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1)
 		if customer:
 			recipients.append(customer[0][0])	
-	# frappe.errprint(recipients)		
 	if recipients:
-		message ="""Dear %s
-		Your voucher is redeemed against the PIN.
-		Value of the voucher :%s
-		Redemption Date:%s 
-		Thank You.""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		if Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==1:
+			message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
+			<p>Value of the voucher :%s</p>
+			<p>Redemption Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		elif Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==0:
+			message ="""<h3>Dear %s </h3><p>Your voucher is verified but not redeemed against the PIN </p>
+			<p>Value of the voucher :%s</p>
+			<p>Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+		else:message ="""<h3>Dear %s </h3><p>Your voucher is not redeemed against the PIN </p>
+			<p>Please Verify the Details</p>
+			<p>Date:%s </p>
+			<p>Thank You,</p>
+			""" %(Voucher.customer,formatdate(Voucher.creation))
 		send_sms(recipients,cstr(message))	
 
 
