@@ -36,14 +36,15 @@ class SlotCashier(Document):
 			else:
 				expiry_date=" "
 			if buy_back_requisition_ref:
-				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
+				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
 				if customer_details:
 					return {
 						"customer": customer_details[0]['customer'],
 						"id_type":customer_details[0]['id_type'],
 						"id_no":customer_details[0]['id_no'],
 						"offered_price":customer_details[0]['offered_price'],
-						"expiry_date":cstr(expiry_date)
+						"expiry_date":cstr(expiry_date),
+						"customer_image":customer_details[0]['customer_image']
 						
 					}
 
@@ -95,21 +96,24 @@ def send_redeemed_sms(Voucher, method):
 			recipients.append(customer[0][0])	
 	if recipients:
 		if Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==1:
-			message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
-			<p>Value of the voucher :%s</p>
-			<p>Redemption Date:%s </p>
-			<p>Thank You,</p>
+			message ="""Dear %s
+			Your voucher is redeemed against the PIN
+			Value of the voucher :%s
+			Redemption Date:%s 
+			Thank You.
 			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
 		elif Voucher.verified==1 and Voucher.mark_voucher_as_redeemed==0:
-			message ="""<h3>Dear %s </h3><p>Your voucher is verified but not redeemed against the PIN </p>
-			<p>Value of the voucher :%s</p>
-			<p>Date:%s </p>
-			<p>Thank You,</p>
+			message ="""Dear %s
+			Your voucher is verified but not redeemed against the PIN 
+			Value of the voucher :%s
+			Date:%s 
+			Thank You.
 			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
-		else:message ="""<h3>Dear %s </h3><p>Your voucher is not redeemed against the PIN </p>
-			<p>Please Verify the Details</p>
-			<p>Date:%s </p>
-			<p>Thank You,</p>
+		else:message ="""Dear %s 
+			Your voucher is not redeemed against the PIN 
+			Please Verify the Details
+			Date:%s 
+			Thank You.
 			""" %(Voucher.customer,formatdate(Voucher.creation))
 		send_sms(recipients,cstr(message))	
 

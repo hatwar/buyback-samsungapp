@@ -271,6 +271,13 @@
    "precision": ""
   }, 
   {
+   "fieldname": "colour", 
+   "fieldtype": "Data", 
+   "label": "Colour", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "device_picture", 
    "fieldtype": "Section Break", 
    "label": " Images To Be Captured", 
@@ -398,7 +405,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-06 09:36:34.238638", 
+ "modified": "2015-02-09 08:43:11.490350", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 

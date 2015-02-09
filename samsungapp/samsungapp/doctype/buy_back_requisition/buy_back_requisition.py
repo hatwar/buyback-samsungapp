@@ -34,6 +34,8 @@ def save(BuyBackRequisition, method):
 		po.supplier= 'Slot buy back program'
 		po.naming_series="PO-BB-"
 		po.buy_back_requisition_ref=BuyBackRequisition.name
+		po.colour=BuyBackRequisition.colour
+		po.imei_number=BuyBackRequisition.iemi_number
 		poc = po.append('po_details', {})
 		poc.item_code=BuyBackRequisition.item_code
 		poc.schedule_date=nowdate()
@@ -193,6 +195,8 @@ def get_accessories_details(accessories,active):
 	else:
 		return 0
 
+
+# code done by Tejal for algorithm
 
 @frappe.whitelist()
 def get_capacity(capacity,active):

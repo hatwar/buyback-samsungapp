@@ -17,25 +17,33 @@ cur_frm.cscript.item_code = function(doc,cdt,cdn){
 							refresh_field('fix_price');
 														
 						}
+						// if(r.exe)
+						// {
+						// cur_frm.set_value("basic_price", '')
+			  	// 		refresh_field('basic_price')
+						// }
                 	}
         	})
 	}
 
-	cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
+	
+
+cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
+		console.log("in the iemi_number");
 		var value = Math.floor(doc.iemi_number);
-		if (Math.floor(doc.iemi_number) == value) {
-			if (! /^[0-9]{15}$/.test(doc.iemi_number)) {
-				cur_frm.set_value("iemi_number", '')
-			  msgprint("Please Enter  exactly 15 digits!");
-			  return false;
-			}
-			} else {
-				cur_frm.set_value("iemi_number", '')
-			  msgprint("IEMI Requires Numeric Values ");
-			}
-	}
+		// if (Math.floor(doc.iemi_number) == value) {
+		// 	} else {
+		// 		cur_frm.set_value("iemi_number", '')
+		// 	  msgprint("IEMI Requires Numeric Values ");
+		// 	}
+			if (/^[0-9]{15}$/.test(doc.iemi_number)) {
+				
+			}else{
+			msgprint("IMEI should have 15 digits!");
+			  // cur_frm.set_value("iemi_number", '')
 
-
+			}
+}
 	
 
 
@@ -272,7 +280,7 @@ cur_frm.cscript.update_totals=function(doc,cdt,cdn){
 
 cur_frm.cscript.captured_device_image = function(doc, cdt, cdn){
 	// console.log(doc.captured_device_image)
-	if(!/(\.png|\.jpg|\.gif)$/i.test(doc.captured_device_image))
+	if(!/(\.png|\.jpg|\.gif|\.jpeg|\.tiff)$/i.test(doc.captured_device_image))
 	{
 		cur_frm.set_value("captured_device_image", '')
 		msgprint(__("Please Enter valid File.")); 
@@ -286,7 +294,7 @@ cur_frm.cscript.captured_device_image = function(doc, cdt, cdn){
 
 cur_frm.cscript.customer_image = function(doc, cdt, cdn){
 	if(doc.customer_image)
-	if(!/(\.png|\.jpg|\.gif)$/i.test(doc.customer_image))
+	if(!/(\.png|\.jpg|\.gif|\.jpeg|\.tiff)$/i.test(doc.customer_image))
 	{
 		cur_frm.set_value("customer_image", '')
 		msgprint(__("Please Enter valid File.")); 
