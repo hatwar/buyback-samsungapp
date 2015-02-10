@@ -47,6 +47,9 @@ class SlotCashier(Document):
 						"customer_image":customer_details[0]['customer_image']
 						
 					}
+			else:
+				msgprint(_("Voucher is Invalid!"))
+						
 
 
 @frappe.whitelist()
