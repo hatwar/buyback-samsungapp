@@ -15,29 +15,25 @@ class SlotCashier(Document):
 
 
 	def check_pin(self,pin):
-		frappe.errprint("in the if")
 		slot_cashier=frappe.db.sql("""select name,verified,mark_voucher_as_redeemed,expiry_date from `tabSlot Cashier` where enter_pin='%s' """%(pin),as_dict=1)
-		# frappe.errprint(slot_cashier)
 		if slot_cashier:
 			for slot in slot_cashier:
-				# frappe.errprint(slot['name'])
 				if slot['verified']==1 and slot['mark_voucher_as_redeemed']==1:
 					# msgprint(_("Voucher is already reedemed"))
-					msgprint(_("Voucher is already reedemed!"), raise_exception=1)
+					msgprint(_("Voucher is already reedemed!"),raise_exception=1)
 					return  {"ret":'ret'}
 				elif slot['verified']==0 and slot['mark_voucher_as_redeemed']==0 and getdate(slot['expiry_date'])<getdate(nowdate()):
-					msgprint(_("Voucher Expired!"))
+					msgprint(_("Voucher Expired!"),raise_exception=1)
 					return  {"ret":'ret'}
 
 		else:
-			frappe.errprint("in the else")
 			buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(pin),as_dict=1)
 			no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1,debug=1)
 			# frappe.errprint(no_of_days)
 			if no_of_days:
 				expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 			else:
-				expiry_date=" "
+				expiry_date=""
 			if buy_back_requisition_ref:
 				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
 				if customer_details:

@@ -8,7 +8,7 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 					// cur_frm.set_value("enter_pin", '')
 					// refresh_field('enter_pin')
 				}
-				console.log(r.message['customer_image'])
+				console.log(r.message)
 				cur_frm.set_value("customer", r.message['customer'])
 				cur_frm.set_value("id_type", r.message['id_type'])
 				cur_frm.set_value("id_number", r.message['id_no'])
