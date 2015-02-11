@@ -5,8 +5,8 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 			args: doc.enter_pin,
 			callback: function(r) {
 				if(r.message['ret']=='ret') {
-					cur_frm.set_value("enter_pin", '')
-					refresh_field('enter_pin')
+					// cur_frm.set_value("enter_pin", '')
+					// refresh_field('enter_pin')
 				}
 				console.log(r.message['customer_image'])
 				cur_frm.set_value("customer", r.message['customer'])
@@ -31,15 +31,32 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 		})
 }
 
+cur_frm.cscript.validate= function(doc,cdt,cdn){
+        if(doc.enter_pin)
+        {
+		cur_frm.cscript.enter_pin(doc,cdt,cdn);	
+	    }
+		if (doc.iemi_no)
+		{
+        cur_frm.cscript.iemi_no(doc,cdt,cdn);
+        }
+
+       
+		}
+
+
 cur_frm.cscript.iemi_no = function(doc,cdt,cdn){
 		var value = Math.floor(doc.iemi_no);
 		if (Math.floor(doc.iemi_no) == value) {
 			if (! /^[0-9]{15}$/.test(doc.iemi_no)) {
-			  msgprint("Please Enter  exactly 15 digits!");
+			  msgprint("IMEI should have 15 digits!!");
+			  throw "Please Enter exactly 15 digits!"
 			  return false;
 			}
 			} else {
+			  cur_frm.set_value("iemi_no", '')
 			  msgprint("IEMI Requires Numeric Values ");
+			  throw "Please Enter exactly 15 digits!"
 			}
 
 	}

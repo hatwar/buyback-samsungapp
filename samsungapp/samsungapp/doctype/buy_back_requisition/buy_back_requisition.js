@@ -28,22 +28,33 @@ cur_frm.cscript.item_code = function(doc,cdt,cdn){
 
 	
 
-cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
-		console.log("in the iemi_number");
-		var value = Math.floor(doc.iemi_number);
-		// if (Math.floor(doc.iemi_number) == value) {
-		// 	} else {
-		// 		cur_frm.set_value("iemi_number", '')
-		// 	  msgprint("IEMI Requires Numeric Values ");
-		// 	}
-			if (/^[0-9]{15}$/.test(doc.iemi_number)) {
-				
-			}else{
-			msgprint("IMEI should have 15 digits!");
-			  // cur_frm.set_value("iemi_number", '')
 
+
+
+cur_frm.cscript.validate= function(doc,cdt,cdn){
+        if (doc.iemi_number)
+        {
+        cur_frm.cscript.iemi_number(doc,cdt,cdn);
+        }
+		}
+
+
+cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
+		var value = Math.floor(doc.iemi_number);
+		if (Math.floor(doc.iemi_number) == value) {
+			if (! /^[0-9]{15}$/.test(doc.iemi_number)) {
+			  // cur_frm.set_value("iemi_number", '')
+			  msgprint("IMEI should have 15 digits!!");
+			  throw "Please Enter exactly 15 digits!"
+			  // return false;
 			}
-}
+			} else {
+			 // cur_frm.set_value("iemi_number", '')
+			  msgprint("IEMI Requires Numeric Values ");
+			  throw "IEMI Requires Numeric Values!"
+			}
+
+	}
 	
 
 

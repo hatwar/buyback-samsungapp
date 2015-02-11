@@ -36,7 +36,7 @@
  "is_submittable": 0, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-01-31 10:40:58.918064", 
+ "modified": "2015-02-10 14:12:11.048127", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Id Type", 
@@ -50,6 +50,14 @@
    "read": 1, 
    "report": 1, 
    "role": "Administrator", 
+   "write": 1
+  }, 
+  {
+   "create": 1, 
+   "delete": 1, 
+   "permlevel": 0, 
+   "read": 1, 
+   "role": "MPO", 
    "write": 1
   }
  ], 
