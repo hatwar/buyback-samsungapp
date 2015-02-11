@@ -294,11 +294,12 @@ cur_frm.cscript.update_totals=function(doc,cdt,cdn){
 }
 
 cur_frm.cscript.captured_device_image = function(doc, cdt, cdn){
-	// console.log(doc.captured_device_image)
+	if(doc.captured_device_image)
 	if(!/(\.png|\.jpg|\.gif|\.jpeg|\.tiff)$/i.test(doc.captured_device_image))
 	{
 		cur_frm.set_value("captured_device_image", '')
-		msgprint(__("Please Enter valid File.")); 
+		msgprint(__("Please Attach Valid File."));
+		throw "Please Enter valid File.!" 
 
 	}
 	else{
@@ -312,8 +313,9 @@ cur_frm.cscript.customer_image = function(doc, cdt, cdn){
 	if(!/(\.png|\.jpg|\.gif|\.jpeg|\.tiff)$/i.test(doc.customer_image))
 	{
 		cur_frm.set_value("customer_image", '')
-		msgprint(__("Please Enter valid File.")); 
-
+		msgprint(__("Please Attach Valid File!")); 
+		throw "Please Enter valid File.!"
+	
 	}
 	else{
 	doc.cust_image='<table style="width: 100%; table-layout: fixed;"><tr><td style="width:110px"><img src="'+doc.customer_image+'" width="100px"></td></tr></table>'
