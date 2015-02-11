@@ -80,8 +80,9 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
                 callback:function(r){
                         if(doc.is_the_device_active=='Yes'){
                         	if (r.message==0){
-								doc.estimated_price=doc.basic_price
-								doc.offered_price=doc.basic_price
+								doc.estimated_price=doc.fix_price
+								doc.offered_price=doc.fix_price
+								doc.basic_price=doc.fix_price
 								doc.device_active=0.0
 								refresh_field('device_active');
 								refresh_field('offered_price')
@@ -100,8 +101,9 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
 						}
 						else if(doc.is_the_device_active=='No'){
 							if (r.message==0){
-								doc.estimated_price=doc.basic_price
-								doc.offered_price=doc.basic_price
+								doc.estimated_price=doc.fix_price
+								doc.offered_price=doc.fix_price
+								doc.basic_price=doc.fix_price
 								doc.device_active=0.0
 								refresh_field('device_active');
 								refresh_field('offered_price')
