@@ -51,6 +51,7 @@ def save(BuyBackRequisition, method):
 @frappe.whitelist()
 def get_device_active_Details(active):
 	#frappe.errprint(active)
+	active_percentage=[]
 	if active=='Yes':
 		active_percentage=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 					and field='device_active_yes_percentage' """)
