@@ -30,28 +30,54 @@ def get_basic_price(item_code,price_list):
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
-	if BuyBackRequisition.customer_acceptance=='Yes':
-		po = frappe.new_doc('Purchase Order')
-		po.supplier= 'Slot buy back program'
-		po.naming_series="PO-BB-"
-		po.buy_back_requisition_ref=BuyBackRequisition.name
-		po.colour=BuyBackRequisition.colour
-		po.imei_number=BuyBackRequisition.iemi_number
-		poc = po.append('po_details', {})
-		poc.item_code=BuyBackRequisition.item_code
-		poc.schedule_date=nowdate()
-		poc.rate=BuyBackRequisition.offered_price
-		po.save()
-		po.submit()
-		msgprint(_("{0} is Created Successfully.").format(po.name))
-		send_device_recv_email(BuyBackRequisition, method)
+	user_permissions = frappe.defaults.get_user_permissions(frappe.session.user)
+	
+	if user_permissions.has_key('Warehouse'):
+		frappe.errprint("in the yes")
+		frappe.errprint(user_permissions['Warehouse'][0])
+		if BuyBackRequisition.customer_acceptance=='Yes':
+			po = frappe.new_doc('Purchase Order')
+			po.supplier= 'Slot buy back program'
+			po.naming_series="PO-BB-"
+			po.buy_back_requisition_ref=BuyBackRequisition.name
+			po.colour=BuyBackRequisition.colour
+			po.imei_number=BuyBackRequisition.iemi_number
+			po.warehouse=user_permissions['Warehouse'][0]
+			poc = po.append('po_details', {})
+			poc.item_code=BuyBackRequisition.item_code
+			poc.schedule_date=nowdate()
+			poc.rate=BuyBackRequisition.offered_price
+			poc.warehouse=user_permissions['Warehouse'][0]
+			po.save()
+			po.submit()
+			msgprint(_("{0} is Created Successfully.").format(po.name))
+			send_device_recv_email(BuyBackRequisition, method)
+	else:
+		msgprint(_("Please set the Warehouse in User Permissions !"), raise_exception=1)	
+
+
+
+	# if BuyBackRequisition.customer_acceptance=='Yes':
+	# 	po = frappe.new_doc('Purchase Order')
+	# 	po.supplier= 'Slot buy back program'
+	# 	po.naming_series="PO-BB-"
+	# 	po.buy_back_requisition_ref=BuyBackRequisition.name
+	# 	po.colour=BuyBackRequisition.colour
+	# 	po.imei_number=BuyBackRequisition.iemi_number
+	# 	poc = po.append('po_details', {})
+	# 	poc.item_code=BuyBackRequisition.item_code
+	# 	poc.schedule_date=nowdate()
+	# 	poc.rate=BuyBackRequisition.offered_price
+	# 	po.save()
+	# 	po.submit()
+	# 	msgprint(_("{0} is Created Successfully.").format(po.name))
+	# 	send_device_recv_email(BuyBackRequisition, method)
 
 
 
 @frappe.whitelist()
 def get_device_active_Details(active):
 	#frappe.errprint(active)
-	active_percentage=[]
 	if active=='Yes':
 		active_percentage=frappe.db.sql("""select ifnull(value,0) from `tabSingles` where doctype='Deduction Percentage Criteria'
 					and field='device_active_yes_percentage' """)
