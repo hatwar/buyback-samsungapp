@@ -324,6 +324,8 @@ cur_frm.cscript.customer_image = function(doc, cdt, cdn){
 }
 
 cur_frm.cscript.estimated_price=cur_frm.cscript.offered_price = function(doc, cdt, cdn){
+	if (!in_list(user_roles, "MSE Supervisor"))
+	{
 	if(doc.offered_price>doc.estimated_price)
 	{
 		msgprint(__("Offered Price Should be less than Estimated Price."));
@@ -331,4 +333,5 @@ cur_frm.cscript.estimated_price=cur_frm.cscript.offered_price = function(doc, cd
 		
 	
 	}
+}
 }
