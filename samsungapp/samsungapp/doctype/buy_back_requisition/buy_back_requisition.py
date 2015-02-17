@@ -11,8 +11,24 @@ from frappe import msgprint, _
 
 
 class BuyBackRequisition(Document):
-	pass
+	# pass
 
+
+
+# @frappe.whitelist()
+	def get_warehouse(self):
+		user_permissions = frappe.defaults.get_user_permissions(frappe.session.user)
+		if user_permissions.has_key('Warehouse'):
+			return{
+			"warehouse":user_permissions['Warehouse'][0]
+			}
+
+
+	def check_imei(self,iemi_number):
+		exist_imei=frappe.db.sql("""select iemi_number,name from `tabBuy Back Requisition` where iemi_number='%s' and docstatus = 1
+					"""%(iemi_number),as_dict=1,debug=1)
+		if exist_imei:
+			msgprint(_("IMEI Number is already exist!"),raise_exception=1)
 
 
 @frappe.whitelist()

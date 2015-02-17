@@ -35,7 +35,7 @@ class SlotCashier(Document):
 			else:
 				expiry_date=""
 			if buy_back_requisition_ref:
-				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
+				customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image,item_code,colour from `tabBuy Back Requisition` where name='%s' """%(buy_back_requisition_ref[0]['buy_back_requisition_ref']),as_dict=1)
 				if customer_details:
 					return {
 						"customer": customer_details[0]['customer'],
@@ -43,7 +43,9 @@ class SlotCashier(Document):
 						"id_no":customer_details[0]['id_no'],
 						"offered_price":customer_details[0]['offered_price'],
 						"expiry_date":cstr(expiry_date),
-						"customer_image":customer_details[0]['customer_image']
+						"customer_image":customer_details[0]['customer_image'],
+						"item_code":customer_details[0]['item_code'],
+						"colour":customer_details[0]['colour']
 						
 					}
 			else:

@@ -17,16 +17,29 @@ cur_frm.cscript.item_code = function(doc,cdt,cdn){
 							refresh_field('fix_price');
 														
 						}
-						// if(r.exe)
-						// {
-						// cur_frm.set_value("basic_price", '')
-			  	// 		refresh_field('basic_price')
-						// }
-                	}
+					}
         	})
 	}
 
-	
+
+cur_frm.cscript.onload = function(doc, cdt, cdn) {
+	cur_frm.cscript.get_warehouse(doc, cdt, cdn)
+}
+
+
+cur_frm.cscript.get_warehouse = function(doc, cdt, cdn) {
+	return cur_frm.call({
+			doc: cur_frm.doc,
+			method: "get_warehouse",
+			callback: function(r) {
+				if(r.message) {
+                cur_frm.set_value("warehouse", r.message['warehouse']);
+                refresh_field('warehouse')					
+
+				} 
+			}
+		})
+}	
 
 
 
@@ -35,25 +48,31 @@ cur_frm.cscript.validate= function(doc,cdt,cdn){
         if (doc.iemi_number)
         {
         cur_frm.cscript.iemi_number(doc,cdt,cdn);
+        cur_frm.cscript.check_imei(doc,cdt,cdn);
         }
 		}
 
+
+
+
+cur_frm.cscript.check_imei = function(doc, cdt, cdn) {
+	return get_server_fields('check_imei', doc.iemi_number, '', doc, cdt, cdn, 1);
+	}	
 
 cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
 		var value = Math.floor(doc.iemi_number);
 		if (Math.floor(doc.iemi_number) == value) {
 			if (! /^[0-9]{15}$/.test(doc.iemi_number)) {
-			  // cur_frm.set_value("iemi_number", '')
 			  msgprint("IMEI should have 15 digits!!");
 			  throw "Please Enter exactly 15 digits!"
-			  // return false;
+			  
 			}
 			} else {
-			 // cur_frm.set_value("iemi_number", '')
+			 
 			  msgprint("IEMI Requires Numeric Values ");
 			  throw "IEMI Requires Numeric Values!"
 			}
-
+				
 	}
 	
 
@@ -324,7 +343,7 @@ cur_frm.cscript.customer_image = function(doc, cdt, cdn){
 }
 
 cur_frm.cscript.estimated_price=cur_frm.cscript.offered_price = function(doc, cdt, cdn){
-	if (!in_list(user_roles, "MSE Supervisor"))
+	if (!in_list(user_roles, "MPO Supervisor"))
 	{
 	if(doc.offered_price>doc.estimated_price)
 	{

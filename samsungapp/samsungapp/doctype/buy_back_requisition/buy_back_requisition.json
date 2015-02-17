@@ -73,6 +73,15 @@
    "precision": ""
   }, 
   {
+   "fieldname": "warehouse", 
+   "fieldtype": "Link", 
+   "in_filter": 1, 
+   "label": "Location", 
+   "options": "Warehouse", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "fieldname": "device_details", 
    "fieldtype": "Section Break", 
    "label": "Device Details", 
@@ -259,14 +268,14 @@
   {
    "fieldname": "iemi_details", 
    "fieldtype": "Section Break", 
-   "label": "IEMI Details", 
+   "label": "IMEI Details", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
    "fieldname": "iemi_number", 
    "fieldtype": "Data", 
-   "label": "IEMI Number", 
+   "label": "IMEI Number", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -405,7 +414,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-12 10:10:42.334173", 
+ "modified": "2015-02-17 15:00:35.750248", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 
@@ -414,6 +423,7 @@
  "permissions": [
   {
    "amend": 1, 
+   "apply_user_permissions": 1, 
    "cancel": 1, 
    "create": 1, 
    "delete": 1, 
@@ -421,12 +431,13 @@
    "read": 1, 
    "report": 1, 
    "role": "MPO", 
+   "set_user_permissions": 1, 
    "submit": 1, 
    "write": 1
   }, 
   {
    "amend": 0, 
-   "apply_user_permissions": 0, 
+   "apply_user_permissions": 1, 
    "cancel": 0, 
    "create": 1, 
    "delete": 1, 
@@ -437,7 +448,7 @@
    "print": 0, 
    "read": 1, 
    "report": 0, 
-   "role": "MSE Supervisor", 
+   "role": "MPO Supervisor", 
    "set_user_permissions": 0, 
    "submit": 0, 
    "write": 1

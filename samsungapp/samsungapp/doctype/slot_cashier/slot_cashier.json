@@ -2,7 +2,7 @@
  "allow_copy": 0, 
  "allow_import": 0, 
  "allow_rename": 0, 
- "autoname": "SC.########", 
+ "autoname": "RF.########", 
  "creation": "2015-01-30 11:53:37.354929", 
  "custom": 0, 
  "docstatus": 0, 
@@ -86,25 +86,38 @@
    "read_only": 1
   }, 
   {
+   "fieldname": "device_details", 
+   "fieldtype": "Section Break", 
+   "label": "Device Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "item_code", 
+   "fieldtype": "Data", 
+   "label": "Device Code", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "colour", 
+   "fieldtype": "Data", 
+   "label": "Colour", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
    "default": "0", 
    "fieldname": "verified", 
    "fieldtype": "Check", 
+   "hidden": 1, 
    "label": "Redeemed", 
    "permlevel": 0, 
    "precision": ""
   }, 
   {
    "default": "", 
-   "depends_on": "eval:doc.verified==0", 
-   "fieldname": "comments1", 
-   "fieldtype": "Small Text", 
-   "label": "Comments", 
-   "permlevel": 0, 
-   "precision": ""
-  }, 
-  {
-   "default": "", 
-   "depends_on": "eval:doc.verified==1", 
+   "depends_on": "", 
    "fieldname": "mark_voucher_as_redeemed", 
    "fieldtype": "Check", 
    "label": "Mark Voucher As Redeemed", 
@@ -113,24 +126,9 @@
   }, 
   {
    "depends_on": "eval:doc.mark_voucher_as_redeemed==1", 
-   "fieldname": "voucher_details", 
-   "fieldtype": "Section Break", 
-   "label": "Voucher Details", 
-   "permlevel": 0, 
-   "precision": ""
-  }, 
-  {
-   "fieldname": "comments", 
-   "fieldtype": "Small Text", 
-   "label": "Comments", 
-   "permlevel": 0, 
-   "precision": ""
-  }, 
-  {
-   "depends_on": "eval:doc.mark_voucher_as_redeemed==1", 
    "fieldname": "new_device_details", 
    "fieldtype": "Section Break", 
-   "label": "New Device Details", 
+   "label": "New Item Purchased", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -151,7 +149,29 @@
   {
    "fieldname": "iemi_no", 
    "fieldtype": "Data", 
-   "label": "IEMI No", 
+   "label": "IMEI Number", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "price", 
+   "fieldtype": "Int", 
+   "label": "Price ", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "depends_on": "eval:doc.mark_voucher_as_redeemed==1", 
+   "fieldname": "voucher_details", 
+   "fieldtype": "Section Break", 
+   "label": "Voucher Details", 
+   "permlevel": 0, 
+   "precision": ""
+  }, 
+  {
+   "fieldname": "comments", 
+   "fieldtype": "Small Text", 
+   "label": "Comments", 
    "permlevel": 0, 
    "precision": ""
   }, 
@@ -173,7 +193,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-09 10:18:10.256684", 
+ "modified": "2015-02-17 15:03:59.603583", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Slot Cashier", 
@@ -189,6 +209,7 @@
    "read": 1, 
    "report": 1, 
    "role": "Redemption Officer", 
+   "set_user_permissions": 1, 
    "submit": 1, 
    "write": 1
   }, 
