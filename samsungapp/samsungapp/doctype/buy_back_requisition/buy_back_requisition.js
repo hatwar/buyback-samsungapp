@@ -48,16 +48,12 @@ cur_frm.cscript.validate= function(doc,cdt,cdn){
         if (doc.iemi_number)
         {
         cur_frm.cscript.iemi_number(doc,cdt,cdn);
-        cur_frm.cscript.check_imei(doc,cdt,cdn);
+     
         }
 		}
 
 
 
-
-cur_frm.cscript.check_imei = function(doc, cdt, cdn) {
-	return get_server_fields('check_imei', doc.iemi_number, '', doc, cdt, cdn, 1);
-	}	
 
 cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
 		var value = Math.floor(doc.iemi_number);

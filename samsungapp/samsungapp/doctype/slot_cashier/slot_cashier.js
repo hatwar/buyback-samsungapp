@@ -1,3 +1,4 @@
+
 cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 	return cur_frm.call({
 			doc: cur_frm.doc,
@@ -8,7 +9,7 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 					cur_frm.set_value("enter_pin", null)
 					refresh_field('enter_pin')
 				}
-				console.log(r.message)
+				// console.log(r.message)
 				cur_frm.set_value("customer", r.message['customer'])
 				cur_frm.set_value("id_type", r.message['id_type'])
 				cur_frm.set_value("id_number", r.message['id_no'])
@@ -37,14 +38,10 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 
 
 
-cur_frm.cscript.validate= function(doc,cdt,cdn){
-        if(doc.enter_pin)
-        {
-		cur_frm.cscript.enter_pin(doc,cdt,cdn);	
-	    }
+cur_frm.cscript.validate= function(doc,dt,dn){
 		if (doc.iemi_no)
 		{
-        cur_frm.cscript.iemi_no(doc,cdt,cdn);
+        cur_frm.cscript.iemi_no(doc,dt,dn);
         }
 
        

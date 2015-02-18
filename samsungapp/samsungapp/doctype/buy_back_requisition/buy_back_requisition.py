@@ -11,11 +11,18 @@ from frappe import msgprint, _
 
 
 class BuyBackRequisition(Document):
-	# pass
+
+	def validate(self):
+		self.check_imei(self.iemi_number)
+		self.check_basic_price()
 
 
 
-# @frappe.whitelist()
+	def check_basic_price(self):
+		if not self.basic_price:
+			msgprint(_("Please Set The Basic Item Price!"),raise_exception=1)
+
+			
 	def get_warehouse(self):
 		user_permissions = frappe.defaults.get_user_permissions(frappe.session.user)
 		if user_permissions.has_key('Warehouse'):
@@ -26,7 +33,7 @@ class BuyBackRequisition(Document):
 
 	def check_imei(self,iemi_number):
 		exist_imei=frappe.db.sql("""select iemi_number,name from `tabBuy Back Requisition` where iemi_number='%s' and docstatus = 1
-					"""%(iemi_number),as_dict=1,debug=1)
+					"""%(iemi_number),as_dict=1)
 		if exist_imei:
 			msgprint(_("IMEI Number is already exist!"),raise_exception=1)
 
@@ -34,7 +41,7 @@ class BuyBackRequisition(Document):
 @frappe.whitelist()
 def get_basic_price(item_code,price_list):
 	basic_price=frappe.db.sql("""select price_list_rate from `tabItem Price` where item_code='%s'
-					and price_list='%s' """%(item_code,price_list),as_dict=1,debug=1)
+					and price_list='%s' """%(item_code,price_list),as_dict=1)
 	if basic_price:
 		return [{
 					"basic_price": basic_price[0]['price_list_rate'],
@@ -272,7 +279,7 @@ def send_device_recv_email(BuyBackRequisition, method):
 	expiry_date=''
 	if BuyBackRequisition.email_id:
 		recipients.append(BuyBackRequisition.email_id)
-	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MSE','Slot Cashier','Slot Representative')""",as_dict=1,debug=1)
+	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MPO','Collection Officer','Redemption Officer')""",as_dict=1)
 	if recipient:
 		for resp in recipient:
 			recipients.append(resp['parent'])
