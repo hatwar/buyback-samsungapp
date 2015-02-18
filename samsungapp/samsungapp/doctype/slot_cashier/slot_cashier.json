@@ -97,14 +97,16 @@
    "fieldtype": "Data", 
    "label": "Device Code", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "fieldname": "colour", 
    "fieldtype": "Data", 
    "label": "Colour", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "", 
+   "read_only": 1
   }, 
   {
    "default": "0", 
@@ -193,7 +195,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-17 15:03:59.603583", 
+ "modified": "2015-02-18 07:42:27.276729", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Slot Cashier", 
