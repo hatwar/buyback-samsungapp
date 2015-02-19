@@ -79,7 +79,7 @@ def send_reedemed_email(Voucher, method):
 			recipients.append(resp['parent'])
 	if recipients:
 		subject = "Voucher Redemption"
-		if Voucher.mark_voucher_as_redeemed==ra1:
+		if Voucher.mark_voucher_as_redeemed==1:
 			message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
 			<p>Value of the voucher :%s</p>
 			<p>Redemption Date:%s </p>
