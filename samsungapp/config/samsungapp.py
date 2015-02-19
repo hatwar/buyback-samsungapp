@@ -32,13 +32,6 @@ def get_data():
 				},
 				{
 					"type": "doctype",
-					"name": "Id Type",
-					"icon": "icon-sitemap",
-					"label": _("Id Type"),
-					"description": _("Id Type"),
-				},
-				{
-					"type": "doctype",
 					"name": "Pin Expiry Details",
 					"icon": "icon-sitemap",
 					"label": _("Pin Expiry Details"),

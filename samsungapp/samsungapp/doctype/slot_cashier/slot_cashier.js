@@ -5,21 +5,16 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 			method: "check_pin",
 			args: doc.enter_pin,
 			callback: function(r) {
-				if(r.message['ret']=='ret') {
-					cur_frm.set_value("enter_pin", null)
-					refresh_field('enter_pin')
-				}
-				// console.log(r.message)
+				if (r.message)
+				{
 				cur_frm.set_value("customer", r.message['customer'])
 				cur_frm.set_value("id_type", r.message['id_type'])
 				cur_frm.set_value("id_number", r.message['id_no'])
-				cur_frm.set_value("discount_amount", r.message['offered_price'])
+				cur_frm.set_value("discount_amount",flt(r.message['offered_price']))
 				cur_frm.set_value("expiry_date", r.message['expiry_date'])
 				cur_frm.set_value("colour", r.message['colour'])
 				cur_frm.set_value("item_code", r.message['item_code'])
 				cur_frm.set_value("customer_image",'<table style="width: 100%; table-layout: fixed;"><tr><td style="width:110px"><img src="'+r.message['customer_image']+'" width="100px"></td></tr></table>')
-
-				
 	
 				refresh_field('id_type');
 				refresh_field('id_number');
@@ -30,6 +25,7 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 				refresh_field('item_code');
 				refresh_field('colour');
 				cur_frm.refresh();
+			}
 				
 			},
 		
@@ -63,6 +59,26 @@ cur_frm.cscript.iemi_no = function(doc,cdt,cdn){
 			}
 
 	}
+
+
+cur_frm.cscript.onload = function(doc, cdt, cdn) {
+	cur_frm.cscript.get_warehouse(doc, cdt, cdn)
+}
+
+
+cur_frm.cscript.get_warehouse = function(doc, cdt, cdn) {
+	return cur_frm.call({
+			doc: cur_frm.doc,
+			method: "get_warehouse",
+			callback: function(r) {
+				if(r.message) {
+                cur_frm.set_value("warehouse", r.message['warehouse']);
+                refresh_field('warehouse')					
+
+				} 
+			}
+		})
+}		
 
 
 

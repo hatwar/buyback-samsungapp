@@ -14,7 +14,7 @@ def generate_pin(PR, method):
 	import random
 	code=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
 	frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(code,PR.name))
-	frappe.errprint("code")
+	# frappe.errprint("code")
 	send_email(PR, method,code)
 	send_pin_sms(PR, method,code)
 
@@ -33,12 +33,12 @@ def send_email(PR, method,code):
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
 		subject = "Voucher Generation"
-		message ="""<h3>Dear %s</h3><p>Below PIN is generated against the device sold at Matrix store </p>
+		message ="""<h3>Dear %s</h3><p>Below PIN is generated against your transaction %s at %s </p>
 		<p>PIN:%s</p>
 		<p>PIN Expiry Date:%s </p>
 		<p>Kindly redeem the voucher before the expiry date.</p>
 		<p>Thank You,</p>
-		""" %(cust,code,formatdate(expiry_date))
+		""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
 		sendmail(recipients, subject=subject, msg=message)	
 
 
@@ -55,11 +55,11 @@ def send_pin_sms(PR, method,code):
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
 		message ="""Dear %s
-		Below PIN is generated against the device sold at Matrix store
+		Below PIN is generated against your transaction %s at %s 
 		PIN:%s
 		PIN Expiry Date:%s 
 		Kindly redeem the voucher before the expiry date.
-		Thank You.""" %(cust,code,formatdate(expiry_date))
+		Thank You.""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
 		send_sms(recipients,cstr(message))
 
 

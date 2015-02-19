@@ -285,13 +285,14 @@ def send_device_recv_email(BuyBackRequisition, method):
 			recipients.append(resp['parent'])
 	if recipients:
 		subject = "Device Received"
-		message ="""<h3>Dear %s</h3><p>We received your device at Matrix store, below are the details</p>
+		message ="""<h3>Dear %s</h3><p>We received your device at %s, below are the details</p>
+		<p>Transaction ID:%s</p>
 		<p>Device Received :%s</p>
 		<p>Received Date:%s </p>
 		<p>Offered Price:%s</p>
 		<p>Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.</p>
 		<p>Thank You,</p>
-		""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+		""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
 		sendmail(recipients, subject=subject, msg=message)
 
 
@@ -300,9 +301,9 @@ def send_to_sms(BuyBackRequisition, method):
 	if BuyBackRequisition.phone_no:
 		phone_no=eval(BuyBackRequisition.phone_no)
 		recipients.append(cstr(phone_no))
-		message ="""Dear %s,We received your device at Matrix store, below are the details
-			Device Received :%s,Received Date:%s,Offered Price:%s,Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
-			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+		message ="""Dear %s,We received your device at %s, below are the details
+			Transaction ID:%s,Device Received :%s,Received Date:%s,Offered Price:%s,Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
+			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
 		send_sms(recipients,cstr(message))
 
 
