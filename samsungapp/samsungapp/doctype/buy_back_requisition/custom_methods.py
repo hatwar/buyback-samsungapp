@@ -33,7 +33,7 @@ def send_email(PR, method,code):
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
 		subject = "Voucher Generation"
-		message ="""<h3>Dear %s</h3><p>Below PIN is generated against your transaction %s at %s </p>
+		message ="""<h3>Dear %s</h3><p>The PIN below PIN is generated against your transaction %s at %s </p>
 		<p>PIN:%s</p>
 		<p>PIN Expiry Date:%s </p>
 		<p>Kindly redeem the voucher before the expiry date.</p>
@@ -55,7 +55,7 @@ def send_pin_sms(PR, method,code):
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
 		message ="""Dear %s
-		Below PIN is generated against your transaction %s at %s 
+		The PIN below is generated against your transaction %s at %s 
 		PIN:%s
 		PIN Expiry Date:%s 
 		Kindly redeem the voucher before the expiry date.

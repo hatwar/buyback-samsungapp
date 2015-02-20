@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 from frappe.model.document import Document
-from frappe.utils import today,add_days,cint,nowdate,formatdate,cstr,getdate
+from frappe.utils import today,add_days,cint,nowdate,formatdate,cstr,getdate,fmt_money,flt
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 import frappe
 from frappe import msgprint, _
@@ -66,9 +66,12 @@ class SlotCashier(Document):
 
 @frappe.whitelist()
 def send_reedemed_email(Voucher, method):
+	transaction_id=''
 	from frappe.utils.email_lib import sendmail
 	recipients=[]
-	expiry_date=''
+	buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(Voucher.enter_pin),as_dict=1)
+	if buy_back_requisition_ref:
+		transaction_id=buy_back_requisition_ref[0]['buy_back_requisition_ref']
 	if Voucher.customer:
 		customer=frappe.db.sql("""select email_id from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1)
 		if customer:
@@ -80,11 +83,11 @@ def send_reedemed_email(Voucher, method):
 	if recipients:
 		subject = "Voucher Redemption"
 		if Voucher.mark_voucher_as_redeemed==1:
-			message ="""<h3>Dear %s </h3><p>Your voucher is redeemed against the PIN </p>
+			message ="""<h3>Dear %s </h3><p>Your Voucher for Transaction %s at %s has been successfully redeemed</p>
 			<p>Value of the voucher :%s</p>
 			<p>Redemption Date:%s </p>
 			<p>Thank You,</p>
-			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+			""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
 			sendmail(recipients, subject=subject, msg=message)	
 
 
@@ -92,6 +95,10 @@ def send_reedemed_email(Voucher, method):
 @frappe.whitelist()
 def send_redeemed_sms(Voucher, method):
 	recipients=[]
+	transaction_id=''
+	buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(Voucher.enter_pin),as_dict=1)
+	if buy_back_requisition_ref:
+		transaction_id=buy_back_requisition_ref[0]['buy_back_requisition_ref']
 	if Voucher.customer:
 		customer=frappe.db.sql("""select phone_no from `tabCustomer` where name='%s' """%(Voucher.customer),as_list=1)
 		if customer:
@@ -99,11 +106,11 @@ def send_redeemed_sms(Voucher, method):
 	if recipients:
 		if Voucher.mark_voucher_as_redeemed==1:
 			message ="""Dear %s
-			Your voucher is redeemed against the PIN
+			Your Voucher for Transaction %s at %s has been successfully redeemed.
 			Value of the voucher :%s
 			Redemption Date:%s 
 			Thank You.
-			""" %(Voucher.customer,Voucher.discount_amount,formatdate(Voucher.creation))
+			""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
 			send_sms(recipients,cstr(message))	
 
 

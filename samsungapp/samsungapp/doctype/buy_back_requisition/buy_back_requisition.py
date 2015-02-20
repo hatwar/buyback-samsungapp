@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 from frappe.utils.email_lib import sendmail
-from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr
+from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr,flt,fmt_money
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 from frappe import msgprint, _
 
@@ -290,9 +290,9 @@ def send_device_recv_email(BuyBackRequisition, method):
 		<p>Device Received :%s</p>
 		<p>Received Date:%s </p>
 		<p>Offered Price:%s</p>
-		<p>Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.</p>
+		<p>Your voucher will be sent to you in a separate email & sms correspondence.</p>
 		<p>Thank You,</p>
-		""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+		""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))
 		sendmail(recipients, subject=subject, msg=message)
 
 
@@ -302,8 +302,8 @@ def send_to_sms(BuyBackRequisition, method):
 		phone_no=eval(BuyBackRequisition.phone_no)
 		recipients.append(cstr(phone_no))
 		message ="""Dear %s,We received your device at %s, below are the details
-			Transaction ID:%s,Device Received :%s,Received Date:%s,Offered Price:%s,Voucher will be sent to you via PIN. PIN will be sent to you in a separate email & sms correspondence.
-			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),BuyBackRequisition.offered_price)
+			Transaction ID:%s,Device Received :%s,Received Date:%s,Offered Price:%s,Your voucher will be sent to you in a separate email & sms correspondence.
+			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))
 		send_sms(recipients,cstr(message))
 
 
