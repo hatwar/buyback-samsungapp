@@ -25,10 +25,10 @@ def get_data():
 				},
 				{
 					"type": "doctype",
-					"name": "Slot Cashier",
+					"name": "Redemption Form",
 					"icon": "icon-sitemap",
 					"label": _("Voucher Redemption Form"),
-					"description": _("Slot Cashier."),
+					"description": _("Redemption Form."),
 				},
 				{
 					"type": "doctype",

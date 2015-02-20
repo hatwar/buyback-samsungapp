@@ -9,7 +9,7 @@ import frappe
 from frappe import msgprint, _
 
 
-class SlotCashier(Document):
+class RedemptionForm(Document):
 
 	def validate(self):
 		self.exist_pin(self.enter_pin)
@@ -48,7 +48,7 @@ class SlotCashier(Document):
 	def exist_pin(self,pin):
 		import datetime
 		buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(pin),as_dict=1)
-		slot_cashier=frappe.db.sql("""select name,mark_voucher_as_redeemed,expiry_date from `tabSlot Cashier` where enter_pin='%s' and docstatus=1"""%(pin),as_dict=1)
+		slot_cashier=frappe.db.sql("""select name,mark_voucher_as_redeemed,expiry_date from `tabRedemption Form` where enter_pin='%s' and docstatus=1"""%(pin),as_dict=1)
 		if not buy_back_requisition_ref:
 			msgprint(_("Voucher is Invalid!"),raise_exception=1)
 		elif slot_cashier:
