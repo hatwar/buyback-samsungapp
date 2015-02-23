@@ -64,7 +64,7 @@ def get_data():
 					"type": "report",
 					"is_query_report": True,
 					"label": _("Voucher Redemption Report"),
-					"name": "Voucher Redeemption Report",
+					"name": "Voucher Redemption Report",
 					"doctype": "Item"
 				},]}
 		

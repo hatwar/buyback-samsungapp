@@ -30,9 +30,11 @@ def send_email(PR, method,code):
 	no_of_days=frappe.db.sql("""select value from `tabSingles` where field='no_of_days'""",as_dict=1)
 	if no_of_days:
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
+		if expiry_date:
+			frappe.db.sql("update `tabPurchase Receipt` set pin_expiry='%s' where name='%s'"%(expiry_date,PR.name))
 	if recipients:
 		subject = "Voucher Generation"
-		message ="""<h3>Dear %s</h3><p>The PIN below PIN is generated against your transaction %s at %s </p>
+		message ="""<h3>Dear %s</h3><p>The PIN below is generated against your transaction %s at '%s' </p>
 		<p>PIN:%s</p>
 		<p>PIN Expiry Date:%s </p>
 		<p>Kindly redeem the voucher before the expiry date.</p>

@@ -279,13 +279,16 @@ def send_device_recv_email(BuyBackRequisition, method):
 	expiry_date=''
 	if BuyBackRequisition.email_id:
 		recipients.append(BuyBackRequisition.email_id)
-	recipient=frappe.db.sql("""select parent from `tabUserRole` where role in('MPO','Collection Officer','Redemption Officer')""",as_dict=1)
+	recipient=frappe.db.sql("""select parent from `tabDefaultValue` where 
+								defkey='Warehouse' and defvalue='%s' 
+								and  parent in (select parent from `tabUserRole` 
+								where role in('MPO','Collection Officer','Redemption Officer'))"""%BuyBackRequisition.warehouse,as_dict=1,debug=1)
 	if recipient:
 		for resp in recipient:
 			recipients.append(resp['parent'])
 	if recipients:
 		subject = "Device Received"
-		message ="""<h3>Dear %s</h3><p>We received your device at %s, below are the details</p>
+		message ="""<h3>Dear %s</h3><p>We received your device at '%s', below are the details</p>
 		<p>Transaction ID:%s</p>
 		<p>Device Received :%s</p>
 		<p>Received Date:%s </p>
