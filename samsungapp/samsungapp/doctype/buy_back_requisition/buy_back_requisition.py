@@ -15,8 +15,14 @@ class BuyBackRequisition(Document):
 	def validate(self):
 		self.check_imei(self.iemi_number)
 		self.check_basic_price()
+		self.check_paper_voucher()
 
-
+	def check_paper_voucher(self):
+		# frappe.errprint("in the check_paper_voucher")
+		if self.voucher_type=='Paper Voucher':
+			if not( self.voucher_serial_number and self.voucher_expiry_date):
+				msgprint(_("Please Enter Serial Number and Expiry Date For Paper Voucher!"),raise_exception=1)
+			
 
 	def check_basic_price(self):
 		if not self.basic_price:
@@ -53,10 +59,13 @@ def get_basic_price(item_code,price_list):
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
+	frappe.errprint(BuyBackRequisition.voucher_serial_number)
 	user_permissions = frappe.defaults.get_user_permissions(frappe.session.user)
 	if user_permissions.has_key('Warehouse'):
 		if BuyBackRequisition.customer_acceptance=='Yes':
 			po = frappe.new_doc('Purchase Order')
+			if BuyBackRequisition.voucher_type=='Paper Voucher':
+				po.paper_voucher_pin=BuyBackRequisition.voucher_serial_number
 			po.supplier= 'Slot buy back program'
 			po.naming_series="PO-BB-"
 			po.buy_back_requisition_ref=BuyBackRequisition.name
@@ -282,17 +291,17 @@ def send_device_recv_email(BuyBackRequisition, method):
 	recipient=frappe.db.sql("""select parent from `tabDefaultValue` where 
 								defkey='Warehouse' and defvalue='%s' 
 								and  parent in (select parent from `tabUserRole` 
-								where role in('MPO','Collection Officer','Redemption Officer'))"""%BuyBackRequisition.warehouse,as_dict=1,debug=1)
+								where role in('MPO','Collection Officer','Redemption Officer'))"""%BuyBackRequisition.warehouse,as_dict=1)
 	if recipient:
 		for resp in recipient:
 			recipients.append(resp['parent'])
 	if recipients:
 		subject = "Device Received"
-		message ="""<h3>Dear %s</h3><p>We received your device at '%s', below are the details</p>
-		<p>Transaction ID:%s</p>
-		<p>Device Received :%s</p>
-		<p>Received Date:%s </p>
-		<p>Offered Price:%s</p>
+		message ="""<h3>Dear  %s</h3><p> We received your device at    '%s', below are the details</p>
+		<p>Transaction ID:   %s</p>
+		<p>Device Received:   %s</p>
+		<p>Received Date:     %s </p>
+		<p>Offered Price:    %s</p>
 		<p>Your voucher will be sent to you in a separate email & sms correspondence.</p>
 		<p>Thank You,</p>
 		""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))

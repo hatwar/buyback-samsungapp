@@ -34,6 +34,7 @@ cur_frm.cscript.enter_pin = function(doc, cdt, cdn){
 
 
 
+
 cur_frm.cscript.validate= function(doc,dt,dn){
 		if (doc.iemi_no)
 		{
