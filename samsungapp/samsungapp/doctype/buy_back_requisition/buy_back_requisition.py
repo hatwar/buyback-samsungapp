@@ -59,7 +59,6 @@ def get_basic_price(item_code,price_list):
 
 @frappe.whitelist()
 def save(BuyBackRequisition, method):
-	frappe.errprint(BuyBackRequisition.voucher_serial_number)
 	user_permissions = frappe.defaults.get_user_permissions(frappe.session.user)
 	if user_permissions.has_key('Warehouse'):
 		if BuyBackRequisition.customer_acceptance=='Yes':
