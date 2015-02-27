@@ -414,7 +414,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-02-27 10:39:26.786767", 
+ "modified": "2015-02-27 14:17:32.561593", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Redemption Form", 
@@ -437,6 +437,24 @@
    "role": "Redemption Officer", 
    "set_user_permissions": 1, 
    "submit": 1, 
+   "write": 1
+  }, 
+  {
+   "amend": 0, 
+   "apply_user_permissions": 0, 
+   "cancel": 0, 
+   "create": 1, 
+   "delete": 0, 
+   "email": 0, 
+   "export": 0, 
+   "import": 0, 
+   "permlevel": 0, 
+   "print": 0, 
+   "read": 1, 
+   "report": 0, 
+   "role": "Collection Officer", 
+   "set_user_permissions": 0, 
+   "submit": 0, 
    "write": 1
   }, 
   {
