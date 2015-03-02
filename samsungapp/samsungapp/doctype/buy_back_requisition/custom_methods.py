@@ -26,7 +26,7 @@ def generate_pin(PR, method):
 		send_pin_sms(PR, method,code)
 
 def create_redemption_form(PR,pin,pin_expiry):
-	frappe.errprint(PR.pin_expiry)
+	# frappe.errprint(PR.pin_expiry)
 	customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image,item_code,colour from `tabBuy Back Requisition` where name='%s' """%(PR.buy_back_requisition_ref),as_dict=1)
 	po = frappe.new_doc('Paper Voucher Redemption Form')
 	po.enter_pin=pin

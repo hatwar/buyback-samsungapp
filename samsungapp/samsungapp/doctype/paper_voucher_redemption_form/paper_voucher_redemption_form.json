@@ -41,7 +41,7 @@
    "permlevel": 0, 
    "precision": "", 
    "print_hide": 0, 
-   "read_only": 0, 
+   "read_only": 1, 
    "report_hide": 0, 
    "reqd": 1, 
    "search_index": 0, 
@@ -414,7 +414,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-03-02 07:23:29.080107", 
+ "modified": "2015-03-02 08:21:37.764824", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Paper Voucher Redemption Form", 
@@ -422,39 +422,12 @@
  "owner": "Administrator", 
  "permissions": [
   {
-   "amend": 0, 
-   "apply_user_permissions": 1, 
-   "cancel": 1, 
    "create": 1, 
    "delete": 1, 
-   "email": 0, 
-   "export": 0, 
-   "import": 0, 
    "permlevel": 0, 
-   "print": 0, 
    "read": 1, 
-   "report": 1, 
    "role": "Redemption Officer", 
-   "set_user_permissions": 1, 
    "submit": 1, 
-   "write": 1
-  }, 
-  {
-   "amend": 0, 
-   "apply_user_permissions": 0, 
-   "cancel": 0, 
-   "create": 1, 
-   "delete": 0, 
-   "email": 0, 
-   "export": 0, 
-   "import": 0, 
-   "permlevel": 0, 
-   "print": 0, 
-   "read": 1, 
-   "report": 0, 
-   "role": "Collection Officer", 
-   "set_user_permissions": 0, 
-   "submit": 0, 
    "write": 1
   }, 
   {
@@ -473,6 +446,13 @@
    "role": "Administrator", 
    "set_user_permissions": 0, 
    "submit": 1, 
+   "write": 1
+  }, 
+  {
+   "create": 1, 
+   "permlevel": 0, 
+   "read": 1, 
+   "role": "Collection Officer", 
    "write": 1
   }
  ], 

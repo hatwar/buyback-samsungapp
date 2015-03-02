@@ -16,6 +16,16 @@ class BuyBackRequisition(Document):
 		self.check_imei(self.iemi_number)
 		self.check_basic_price()
 		self.check_paper_voucher()
+		self.serial_no_paper_voucher()
+
+	def serial_no_paper_voucher(self):
+		if self.voucher_type=='Paper Voucher':
+			check_exist=frappe.db.sql("""select name, voucher_serial_number from `tabBuy Back Requisition` where voucher_serial_number='%s'"""%(self.voucher_serial_number),as_list=1,debug=1)
+			if check_exist:
+				msgprint(_("Voucher Serial Number is already exist!"),raise_exception=1)
+
+
+
 
 	def check_paper_voucher(self):
 		# frappe.errprint("in the check_paper_voucher")
