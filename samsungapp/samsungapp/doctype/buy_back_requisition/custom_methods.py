@@ -18,23 +18,24 @@ def generate_pin(PR, method):
 	if voucher_info:
 		frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(voucher_info[0]['voucher_serial_number'],PR.name))
 		frappe.db.sql("update `tabPurchase Receipt` set pin_expiry='%s' where name='%s'"%(voucher_info[0]['voucher_expiry_date'],PR.name))
-		create_redemption_form(PR,voucher_info[0]['voucher_serial_number'])
+		create_redemption_form(PR,voucher_info[0]['voucher_serial_number'],voucher_info[0]['voucher_expiry_date'])
 	else:
 		code=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
 		frappe.db.sql("update `tabPurchase Receipt` set pin='%s' where name='%s'"%(code,PR.name))
 		send_email(PR, method,code)
 		send_pin_sms(PR, method,code)
 
-def create_redemption_form(PR,pin):
+def create_redemption_form(PR,pin,pin_expiry):
+	frappe.errprint(PR.pin_expiry)
 	customer_details=frappe.db.sql("""select customer,id_type,id_no,offered_price,customer_image,item_code,colour from `tabBuy Back Requisition` where name='%s' """%(PR.buy_back_requisition_ref),as_dict=1)
-	po = frappe.new_doc('Redemption Form')
+	po = frappe.new_doc('Paper Voucher Redemption Form')
 	po.enter_pin=pin
 	po.customer= customer_details[0]['customer']
 	po.customer_image='<table style="width: 100%; table-layout: fixed;"><tr><td style="width:110px"><img src="'+cstr(customer_details[0]['customer_image'])+'" width="100px"></td></tr></table>'
 	po.id_type=customer_details[0]['id_type']
 	po.id_number=customer_details[0]['id_no']
 	po.discount_amount=customer_details[0]['offered_price']
-	po.expiry_date=PR.pin_expiry
+	po.expiry_date=pin_expiry
 	po.item_code=customer_details[0]['item_code']
 	po.colour=customer_details[0]['colour']
 	# po.warehouse = user_permissions['Warehouse'][0]

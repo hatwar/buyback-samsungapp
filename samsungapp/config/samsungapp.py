@@ -27,8 +27,15 @@ def get_data():
 					"type": "doctype",
 					"name": "Redemption Form",
 					"icon": "icon-sitemap",
-					"label": _("Voucher Redemption Form"),
+					"label": _("E Voucher Redemption Form"),
 					"description": _("Redemption Form."),
+				},
+				{
+					"type": "doctype",
+					"name": "Paper Voucher Redemption Form",
+					"icon": "icon-sitemap",
+					"label": _("Paper Voucher Redemption Form"),
+					"description": _("Paper Voucher Redemption Form."),
 				},
 				{
 					"type": "doctype",
