@@ -38,6 +38,7 @@ def create_redemption_form(PR,pin,pin_expiry):
 	po.expiry_date=pin_expiry
 	po.item_code=customer_details[0]['item_code']
 	po.colour=customer_details[0]['colour']
+	po.
 	# po.warehouse = user_permissions['Warehouse'][0]
 	po.save()
 	msgprint(_("{0} is Created Successfully.").format(po.name))
@@ -80,10 +81,10 @@ def send_pin_sms(PR, method,code):
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
 		message ="""Dear %s
-		The PIN below is generated against your transaction %s at %s 
-		PIN:%s
-		PIN Expiry Date:%s 
-		Kindly redeem the voucher before the expiry date.
+		The PIN below is generated against your transaction   %s   at    '%s'
+		PIN:     %s
+		PIN Expiry Date:    %s 
+		Kindly redeem the  voucher  before  the  expiry  date.
 		Thank You.""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
 		send_sms(recipients,cstr(message))
 

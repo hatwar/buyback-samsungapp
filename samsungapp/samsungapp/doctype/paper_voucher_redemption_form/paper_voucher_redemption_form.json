@@ -260,7 +260,7 @@
   }, 
   {
    "allow_on_submit": 0, 
-   "default": "0", 
+   "default": "1", 
    "depends_on": "", 
    "fieldname": "mark_voucher_as_redeemed", 
    "fieldtype": "Check", 
@@ -414,7 +414,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-03-02 08:21:37.764824", 
+ "modified": "2015-03-03 08:48:01.234287", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Paper Voucher Redemption Form", 
@@ -422,11 +422,13 @@
  "owner": "Administrator", 
  "permissions": [
   {
+   "apply_user_permissions": 1, 
    "create": 1, 
    "delete": 1, 
    "permlevel": 0, 
    "read": 1, 
    "role": "Redemption Officer", 
+   "set_user_permissions": 1, 
    "submit": 1, 
    "write": 1
   }, 
@@ -449,10 +451,12 @@
    "write": 1
   }, 
   {
+   "apply_user_permissions": 1, 
    "create": 1, 
    "permlevel": 0, 
    "read": 1, 
    "role": "Collection Officer", 
+   "set_user_permissions": 1, 
    "write": 1
   }
  ], 
