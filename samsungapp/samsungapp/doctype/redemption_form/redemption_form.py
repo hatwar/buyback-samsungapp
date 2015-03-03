@@ -83,9 +83,9 @@ def send_reedemed_email(Voucher, method):
 	if recipients:
 		subject = "Voucher Redemption"
 		if Voucher.mark_voucher_as_redeemed==1:
-			message ="""<h3>Dear %s </h3><p>Your Voucher for Transaction %s at  '%s' has been successfully redeemed</p>
-			<p>Value of the voucher :   %s</p>
-			<p>Redemption Date:   %s </p>
+			message ="""<h3>Dear %s </h3><p>Your Voucher for Transaction %s  at   '%s' has been successfully redeemed</p>
+			<p>Value of the voucher :    %s</p>
+			<p>Redemption Date:    %s </p>
 			<p>Thank You,</p>
 			""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
 			sendmail(recipients, subject=subject, msg=message)	
