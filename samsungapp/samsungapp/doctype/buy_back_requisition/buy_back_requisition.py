@@ -320,7 +320,7 @@ def send_device_recv_email(BuyBackRequisition, method):
 def send_to_sms(BuyBackRequisition, method):
 	recipients=[]
 	if BuyBackRequisition.phone_no:
-		phone_no=eval(BuyBackRequisition.phone_no)
+		phone_no=BuyBackRequisition.phone_no
 		recipients.append(cstr(phone_no))
 		message ="""Dear %s , We received your device at    '%s', 
 					below are the details

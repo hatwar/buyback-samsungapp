@@ -38,7 +38,6 @@ def create_redemption_form(PR,pin,pin_expiry):
 	po.expiry_date=pin_expiry
 	po.item_code=customer_details[0]['item_code']
 	po.colour=customer_details[0]['colour']
-	po.
 	# po.warehouse = user_permissions['Warehouse'][0]
 	po.save()
 	msgprint(_("{0} is Created Successfully.").format(po.name))
