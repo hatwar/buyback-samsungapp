@@ -13,10 +13,17 @@ from frappe import msgprint, _
 class BuyBackRequisition(Document):
 
 	def validate(self):
+		self.is_serial_no_added()
 		self.check_imei(self.iemi_number)
 		self.check_basic_price()
 		self.check_paper_voucher()
 		self.serial_no_paper_voucher()
+
+	def is_serial_no_added(self):
+		is_required = frappe.db.get_value("Item", self.item_code, "has_serial_no")
+		if is_required == 'No':
+			frappe.throw(_("Item {0} is not setup for Serial Nos. Check Item master").format(self.item_code))
+	
 
 	def serial_no_paper_voucher(self):
 		if self.voucher_type=='Paper Voucher':
@@ -85,6 +92,7 @@ def save(BuyBackRequisition, method):
 			poc.item_code=BuyBackRequisition.item_code
 			poc.schedule_date=nowdate()
 			poc.rate=BuyBackRequisition.offered_price
+			poc.serial_no=BuyBackRequisition.iemi_number
 			poc.warehouse=user_permissions['Warehouse'][0]
 			po.save()
 			po.submit()
