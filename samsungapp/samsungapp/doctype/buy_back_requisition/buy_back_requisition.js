@@ -339,7 +339,7 @@ cur_frm.cscript.customer_image = function(doc, cdt, cdn){
 }
 
 cur_frm.cscript.estimated_price=cur_frm.cscript.offered_price = function(doc, cdt, cdn){
-	if (!in_list(user_roles, "MPO Supervisor"))
+	if (!in_list(user_roles, "MPO Supervisor") && !in_list(user_roles, "MPO"))
 	{
 	if(doc.offered_price>doc.estimated_price)
 	{
