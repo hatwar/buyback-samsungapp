@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe.utils.email_lib import sendmail
+from frappe import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,add_days,cint,nowdate,formatdate
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 from frappe import msgprint, _
@@ -64,13 +64,14 @@ def send_email(PR, method,code):
 		<p>Kindly redeem the  voucher  before  the  expiry  date.</p>
 		<p>Thank You,</p>
 		""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
-		sendmail(recipients, subject=subject, msg=message)	
+		frappe.sendmail(recipients, subject=subject, message=message)	
 
 
 
 
 def send_pin_sms(PR, method,code):
 	recipients=[]
+	expiry_date=''
 	customer=frappe.db.sql("""select phone_no ,customer from `tabBuy Back Requisition` where name='%s' """%(PR.buy_back_requisition_ref),as_list=1)
 	if customer:
 		recipients.append(cstr(customer[0][0]))

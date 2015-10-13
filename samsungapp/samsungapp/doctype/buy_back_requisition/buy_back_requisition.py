@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe.utils.email_lib import sendmail
+from frappe import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,formatdate,cstr,flt,fmt_money
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 from frappe import msgprint, _
@@ -88,7 +88,7 @@ def save(BuyBackRequisition, method):
 			po.colour=BuyBackRequisition.colour
 			po.imei_number=BuyBackRequisition.iemi_number
 			po.warehouse=user_permissions['Warehouse'][0]
-			poc = po.append('po_details', {})
+			poc = po.append('items', {})
 			poc.item_code=BuyBackRequisition.item_code
 			poc.schedule_date=nowdate()
 			poc.rate=BuyBackRequisition.offered_price
@@ -322,7 +322,7 @@ def send_device_recv_email(BuyBackRequisition, method):
 		<p>Your voucher will be sent to you in a separate email & sms correspondence.</p>
 		<p>Thank You,</p>
 		""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))
-		sendmail(recipients, subject=subject, msg=message)
+		frappe.sendmail(recipients, subject=subject, message=message)
 
 
 def send_to_sms(BuyBackRequisition, method):

@@ -67,7 +67,7 @@ class RedemptionForm(Document):
 @frappe.whitelist()
 def send_reedemed_email(Voucher, method):
 	transaction_id=''
-	from frappe.utils.email_lib import sendmail
+	from frappe import sendmail
 	recipients=[]
 	buy_back_requisition_ref=frappe.db.sql("""select buy_back_requisition_ref,creation from `tabPurchase Receipt` where pin='%s' """%(Voucher.enter_pin),as_dict=1)
 	if buy_back_requisition_ref:
@@ -88,7 +88,7 @@ def send_reedemed_email(Voucher, method):
 			<p>Redemption Date:    %s </p>
 			<p>Thank You,</p>
 			""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
-			sendmail(recipients, subject=subject, msg=message)	
+			frappe.sendmail(recipients, subject=subject, message=message)	
 
 
 
