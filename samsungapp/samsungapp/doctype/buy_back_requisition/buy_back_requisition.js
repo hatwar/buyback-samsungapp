@@ -23,7 +23,9 @@ cur_frm.cscript.item_code = function(doc,cdt,cdn){
 
 
 cur_frm.cscript.onload = function(doc, cdt, cdn) {
-	cur_frm.cscript.get_warehouse(doc, cdt, cdn)
+	// if(!doc.__islocal) {
+		cur_frm.cscript.get_warehouse(doc, cdt, cdn)
+	// }
 }
 
 
@@ -33,8 +35,10 @@ cur_frm.cscript.get_warehouse = function(doc, cdt, cdn) {
 			method: "get_warehouse",
 			callback: function(r) {
 				if(r.message) {
+					if(!doc.__islocal) {
                 cur_frm.set_value("warehouse", r.message['warehouse']);
-                refresh_field('warehouse')					
+                refresh_field('warehouse')
+                }					
 
 				} 
 			}
