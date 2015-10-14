@@ -105,12 +105,7 @@ def send_redeemed_sms(Voucher, method):
 			recipients.append(customer[0][0])	
 	if recipients:
 		if Voucher.mark_voucher_as_redeemed==1:
-			message ="""Dear %s
-			Your Voucher for Transaction %s at %s has been successfully redeemed.
-			Value of the voucher :%s
-			Redemption Date:%s 
-			Thank You.
-			""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
+			message ="""Dear %s,\nYour Voucher for Transaction %s at %s has been successfully redeemed.\nValue of the voucher :%s,\nRedemption Date:%s,\nThanks You.""" %(Voucher.customer,transaction_id,Voucher.warehouse,fmt_money(flt(Voucher.discount_amount)),formatdate(Voucher.creation))
 			send_sms(recipients,cstr(message))	
 
 

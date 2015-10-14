@@ -330,14 +330,7 @@ def send_to_sms(BuyBackRequisition, method):
 	if BuyBackRequisition.phone_no:
 		phone_no=BuyBackRequisition.phone_no
 		recipients.append(cstr(phone_no))
-		message ="""Dear %s , We received your device at    '%s', 
-					below are the details
-					Transaction ID:		%s,
-					Device Received:	%s,
-					Received Date:		%s,
-					Offered Price:		%s,
-					Your voucher will be sent to you in a separate email & sms correspondence.
-			Thank You.""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))
+		message ="""Dear %s , We received your device at '%s',\nbelow are the details\nTransaction ID: %s,\nDevice Received: %s,\nReceived Date: %s,\nOffered Price: %s,\nYour voucher will be sent to you in a separate email & sms correspondence.\nThanks You.""" %(BuyBackRequisition.customer,BuyBackRequisition.warehouse,BuyBackRequisition.name,BuyBackRequisition.item_name,formatdate(BuyBackRequisition.creation),fmt_money(flt(BuyBackRequisition.offered_price)))
 		send_sms(recipients,cstr(message))
 
 

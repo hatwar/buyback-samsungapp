@@ -80,12 +80,7 @@ def send_pin_sms(PR, method,code):
 	if no_of_days:
 		expiry_date=add_days(nowdate(),cint(no_of_days[0]['value']))
 	if recipients:
-		message ="""Dear %s
-		The PIN below is generated against your transaction   %s   at    '%s'
-		PIN:     %s
-		PIN Expiry Date:    %s 
-		Kindly redeem the  voucher  before  the  expiry  date.
-		Thank You.""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
+		message ="""Dear %s,\nThe PIN below is generated against your transaction %s at '%s',\nPIN: %s,\nPIN Expiry Date: %s,\nKindly redeem the  voucher  before  the  expiry  date.\nThanks You.""" %(cust,PR.buy_back_requisition_ref,PR.warehouse,code,formatdate(expiry_date))
 		send_sms(recipients,cstr(message))
 
 
