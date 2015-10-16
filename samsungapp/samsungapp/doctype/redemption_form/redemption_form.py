@@ -54,8 +54,9 @@ class RedemptionForm(Document):
 		elif slot_cashier:
 			msgprint(_("Voucher is already reedemed!"),raise_exception=1)
 		elif self.expiry_date:
-			expiry_date=datetime.datetime.strptime(self.expiry_date, "%Y-%m-%d").strftime("%Y-%m-%d")
-			if expiry_date < nowdate():
+			# expiry_date=datetime.datetime.strptime(self.expiry_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+			expiry_date=self.expiry_date.split(" ")
+			if expiry_date[0] < nowdate():
 				msgprint(_("Voucher is Expired!"),raise_exception=1)
 		else:
 			pass

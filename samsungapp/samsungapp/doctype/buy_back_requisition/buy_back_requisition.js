@@ -61,19 +61,25 @@ cur_frm.cscript.validate= function(doc,cdt,cdn){
 
 cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
 		var value = Math.floor(doc.iemi_number);
-		if (Math.floor(doc.iemi_number) == value) {
-			if (! /^[0-9]{15}$/.test(doc.iemi_number)) {
-			  msgprint("IMEI should have 15 digits!!");
-			  throw "Please Enter exactly 15 digits!"
+		if (Math.floor(doc.iemi_number) == value) 
+		{
+			if (! /^[0-9]{15}$/.test(doc.iemi_number)) 
+			{
+				doc.iemi_number=''
+				refresh_field('iemi_number');
+				msgprint("IMEI should have 15 digits!!");
+				// throw "Please Enter exactly 15 digits!"
 			  
 			}
-			} else {
-			 
-			  msgprint("IEMI Requires Numeric Values ");
-			  throw "IEMI Requires Numeric Values!"
-			}
-				
-	}
+		} 
+		else 
+		{
+			doc.iemi_number=''
+			refresh_field('iemi_number');
+			msgprint("IEMI Requires Numeric Values ");
+			// throw "IEMI Requires Numeric Values!"
+		}
+}
 	
 
 
@@ -185,13 +191,14 @@ cur_frm.cscript.does_it_have_any_functional_defects = function(doc,cdt,cdn){
 }
 
 cur_frm.cscript.condition_of_the_screen = function(doc,cdt,cdn){
-	if(doc.is_the_device_active=='Yes'|| doc.is_the_device_active=='No'){
-		frappe.call({
-            	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_condition_of_screen",
-            	    args:{"screen_condition":doc.condition_of_the_screen,
-            	           "active":doc.is_the_device_active},
-            	    callback:function(r){
-            	    	// console.log(r.message)
+		if(doc.is_the_device_active=='Yes'|| doc.is_the_device_active=='No'){
+			if(doc.condition_of_the_screen){
+				frappe.call({
+	        	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_condition_of_screen",
+	        	    args:{"screen_condition":doc.condition_of_the_screen,
+	        	           "active":doc.is_the_device_active},
+	        	    callback:function(r){
+	        	    	// console.log(r.message)
 							if(r.message==0){
 								//price=(0.3*doc.basic_price)
 								doc.screen_condition=0.0
@@ -207,37 +214,54 @@ cur_frm.cscript.condition_of_the_screen = function(doc,cdt,cdn){
 							}
 
 					}	
-
-	})
-}
-	else{
-		msgprint("Please specify device is activate or not");
-	}
+				})
+			}
+			else
+			{
+				doc.screen_condition=0.0
+				refresh_field('screen_condition')
+				cur_frm.cscript.update_totals(doc);
+			}
+		}
+		else
+		{
+			msgprint("Please specify device is activate or not");
+		}
 }
 
 cur_frm.cscript.condition_of_device_body = function(doc,cdt,cdn){
 	if (doc.is_the_device_active=='Yes' || doc.is_the_device_active=='No'){
-		frappe.call({
-            	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_condition_of_device_body",
-            	    args:{"device_body":doc.condition_of_device_body,
-            	           "active":doc.is_the_device_active},
-            	    callback:function(r){
-						if(r.message==0){
-							doc.body_condition=0.0
-							refresh_field('body_condition');
-							cur_frm.cscript.update_totals(doc);
-						}
-						else if (r.message>0){
-							value=r.message/100
-							doc.body_condition=value*doc.basic_price
-							refresh_field('body_condition');
-							cur_frm.cscript.update_totals(doc);
-						}
-	}
+		if(doc.condition_of_device_body)
+		{
+			frappe.call({
+        	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_condition_of_device_body",
+        	    args:{"device_body":doc.condition_of_device_body,
+        	           "active":doc.is_the_device_active},
+        	    callback:function(r){
+					if(r.message==0){
+						doc.body_condition=0.0
+						refresh_field('body_condition');
+						cur_frm.cscript.update_totals(doc);
+					}
+					else if (r.message>0){
+						value=r.message/100
+						doc.body_condition=value*doc.basic_price
+						refresh_field('body_condition');
+						cur_frm.cscript.update_totals(doc);
+					}
+				}
 
- })
-}
-	else{
+			})
+		}
+		else
+		{
+			doc.body_condition=0.0
+			refresh_field('body_condition');
+			cur_frm.cscript.update_totals(doc);
+		}
+	}
+	else
+	{
 		msgprint("Please specify device is activate or not");
 
 	}
@@ -245,55 +269,74 @@ cur_frm.cscript.condition_of_device_body = function(doc,cdt,cdn){
 
 cur_frm.cscript.accessories_included = function(doc,cdt,cdn){
 	if (doc.is_the_device_active=='Yes' || doc.is_the_device_active=='No'){
-		frappe.call({
-            	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_accessories_details",
-            	    args:{"accessories":doc.accessories_included,
-            	           "active":doc.is_the_device_active},
-            	    callback:function(r){
-						if (r.message==0){
-							doc.accessories=0.0
-							refresh_field('accessories')
-							cur_frm.cscript.update_totals(doc);
-						}
-						else if (r.message>0){
-							value=r.message/100
-							doc.accessories=value*doc.basic_price
-							refresh_field('accessories')
-							cur_frm.cscript.update_totals(doc);
-						}
+		if(doc.accessories_included)
+		{
+			frappe.call({
+        	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_accessories_details",
+        	    args:{"accessories":doc.accessories_included,
+        	           "active":doc.is_the_device_active},
+        	    callback:function(r){
+					if (r.message==0){
+						doc.accessories=0.0
+						refresh_field('accessories')
+						cur_frm.cscript.update_totals(doc);
 					}
+					else if (r.message>0){
+						value=r.message/100
+						doc.accessories=value*doc.basic_price
+						refresh_field('accessories')
+						cur_frm.cscript.update_totals(doc);
+					}
+				}
 			})
+		}
+		else
+		{
+			doc.accessories=0.0
+			refresh_field('accessories')
+			cur_frm.cscript.update_totals(doc);
+		}
 	}
-	else{
+	else
+	{
 		msgprint("Please specify device is activate or not");
-
 	}
 }
 
 cur_frm.cscript.capacity = function(doc,cdt,cdn){
 
 	if (doc.is_the_device_active=='Yes' || doc.is_the_device_active=='No'){
-		frappe.call({
-            	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_capacity",
-            	    args:{"capacity":doc.capacity,
-            	           "active":doc.is_the_device_active},
-            	    callback:function(r){
-						if (r.message==0){
-							doc.device_capacity=0.0
-							refresh_field('device_capacity');
-							cur_frm.cscript.update_totals(doc);
-						}
-						else if(r.message>0){
-							value= r.message/100
-							doc.device_capacity=value*doc.basic_price
-							refresh_field('device_capacity');
-							cur_frm.cscript.update_totals(doc);
-						}
-						
+		if(doc.capacity)
+		{
+			frappe.call({
+        	    method:"samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.get_capacity",
+        	    args:{"capacity":doc.capacity,
+        	           "active":doc.is_the_device_active},
+        	    callback:function(r){
+					if (r.message==0){
+						doc.device_capacity=0.0
+						refresh_field('device_capacity');
+						cur_frm.cscript.update_totals(doc);
 					}
+					else if(r.message>0){
+						value= r.message/100
+						doc.device_capacity=value*doc.basic_price
+						refresh_field('device_capacity');
+						cur_frm.cscript.update_totals(doc);
+					}
+					
+				}
 			})
+		}
+		else
+		{
+			doc.device_capacity=0.0
+			refresh_field('device_capacity');
+			cur_frm.cscript.update_totals(doc);
+		}
 	}
-	else{
+	else
+	{
 		msgprint("Please specify device is activate or not");
 
 	}
