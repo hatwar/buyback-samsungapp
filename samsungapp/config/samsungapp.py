@@ -50,6 +50,13 @@ def get_data():
 					"icon": "icon-sitemap",
 					"label": _("Deduction Percentage Criteria"),
 					"description": _("Configuration Page"),
+				},
+				{
+					"type": "doctype",
+					"name": "Device Repair",
+					"icon": "icon-sitemap",
+					"label": _("Device Repair"),
+					"description": _("Device Repair Form"),
 				}
 			]
 		},

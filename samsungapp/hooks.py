@@ -105,3 +105,14 @@ app_version = "0.0.1"
 # 	"frappe.core.doctype.event.event.get_events": "samsungapp.event.get_events"
 # }
 
+doc_events = {
+	"Buy Back Requisition": {
+		"on_submit": ["samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.save","samsungapp.samsungapp.doctype.buy_back_requisition.buy_back_requisition.send_to_sms"]
+	},
+	"Redemption Form": {
+		"on_submit":["samsungapp.samsungapp.doctype.redemption_form.redemption_form.send_reedemed_email","samsungapp.samsungapp.doctype.redemption_form.redemption_form.send_redeemed_sms"]
+	},
+	"Purchase Receipt": {
+		"on_submit": "samsungapp.samsungapp.doctype.buy_back_requisition.custom_methods.generate_pin"
+	},
+}

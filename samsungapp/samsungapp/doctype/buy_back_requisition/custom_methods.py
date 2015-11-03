@@ -6,6 +6,7 @@ from frappe import sendmail
 from frappe.utils import nowdate, cstr, flt, now, getdate, add_months,add_days,cint,nowdate,formatdate
 from erpnext.setup.doctype.sms_settings.sms_settings import send_sms
 from frappe import msgprint, _
+from frappe.model.mapper import get_mapped_doc
 
 
 
@@ -87,7 +88,54 @@ def send_pin_sms(PR, method,code):
 
 
 
+def set_missing_values(source, target):
+	target.ignore_pricing_rule = 1
+	target.run_method("set_missing_values")
+	target.run_method("calculate_taxes_and_totals")
 
+@frappe.whitelist()
+def make_purchase_receipt(source_name, target_doc=None):
+	return new_purchase_receipt(source_name,target_doc=None)
+	
+def new_purchase_receipt(source_name,target_doc=None):
+	def update_item(obj, target, source_parent):
+		target.qty = flt(obj.qty) - flt(obj.received_qty)
+		target.stock_qty = (flt(obj.qty) - flt(obj.received_qty)) * flt(obj.conversion_factor)
+		target.amount = (flt(obj.qty) - flt(obj.received_qty)) * flt(obj.rate)
+		target.base_amount = (flt(obj.qty) - flt(obj.received_qty)) * \
+			flt(obj.rate) * flt(source_parent.conversion_rate)
+
+	doc = get_mapped_doc("Purchase Order", source_name,	{
+		"Purchase Order": {
+			"doctype": "Purchase Receipt",
+			"field_map": {
+				# "warehouse": "warehouse",
+			},
+			"validation": {
+				"docstatus": ["=", 1],
+			}
+		},
+		"Purchase Order Item": {
+			"doctype": "Purchase Receipt Item",
+			"field_map": {
+				"name": "prevdoc_detail_docname",
+				"parent": "prevdoc_docname",
+				"parenttype": "prevdoc_doctype",
+				"serial_no":"serial_no",
+			},
+			"postprocess": update_item,
+			"condition": lambda doc: doc.received_qty < doc.qty
+		},
+		"Purchase Taxes and Charges": {
+			"doctype": "Purchase Taxes and Charges",
+			"add_if_empty": True
+		}
+	}, target_doc, set_missing_values)
+	pr = doc.save()
+	doc.submit()
+	msgprint(_("{0} is Created Successfully.").format(doc.name))
+
+	return doc
 
 
 
