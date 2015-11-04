@@ -116,3 +116,5 @@ doc_events = {
 		"on_submit": "samsungapp.samsungapp.doctype.buy_back_requisition.custom_methods.generate_pin"
 	},
 }
+
+fixtures = ["Custom Field"]
