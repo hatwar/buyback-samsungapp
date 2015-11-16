@@ -86,10 +86,10 @@ cur_frm.cscript.iemi_number = function(doc,cdt,cdn){
 cur_frm.cscript.basic_price = function(doc,cdt,cdn){
 		
 	doc.estimated_price=doc.basic_price
-	doc.offered_price=doc.basic_price
+	// doc.offered_price=doc.basic_price
 	refresh_field('estimated_price');
 	refresh_field('device_active');
-	refresh_field('offered_price');
+	// refresh_field('offered_price');
 }
 
 
@@ -106,11 +106,11 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
                         if(doc.is_the_device_active=='Yes'){
                         	if (r.message==0){
 								doc.estimated_price=doc.fix_price
-								doc.offered_price=doc.fix_price
+								// doc.offered_price=doc.fix_price
 								doc.basic_price=doc.fix_price
 								doc.device_active=0.0
 								refresh_field('device_active');
-								refresh_field('offered_price');
+								// refresh_field('offered_price');
 								refresh_field('basic_price');
 								cur_frm.cscript.update_totals(doc);
 							}
@@ -128,11 +128,11 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
 						else if(doc.is_the_device_active=='No'){
 							if (r.message==0){
 								doc.estimated_price=doc.fix_price
-								doc.offered_price=doc.fix_price
+								// doc.offered_price=doc.fix_price
 								doc.basic_price=doc.fix_price
 								doc.device_active=0.0
 								refresh_field('device_active');
-								refresh_field('offered_price');
+								// refresh_field('offered_price');
 								refresh_field('basic_price');
 								cur_frm.cscript.update_totals(doc);
 							}
@@ -142,11 +142,11 @@ cur_frm.cscript.is_the_device_active = function(doc,cdt,cdn){
 								price=value*doc.basic_price
 								doc.device_active=0.0
 								doc.estimated_price=price;
-								doc.offered_price=price
+								// doc.offered_price=price
 								doc.basic_price=price
 								refresh_field('device_active');
 								refresh_field('estimated_price');
-								refresh_field('offered_price');
+								// refresh_field('offered_price');
 								refresh_field('basic_price');
 								//cur_frm.cscript.update_totals(doc);
 							};
@@ -349,9 +349,9 @@ cur_frm.cscript.update_totals=function(doc,cdt,cdn){
 	total=doc.functional_defects+doc.device_active+doc.screen_condition+doc.body_condition+doc.accessories+doc.device_capacity
 	var doc = locals[doc.doctype][doc.name];
 	doc.estimated_price =doc.basic_price-total;
-	doc.offered_price=doc.basic_price-total;
+	// doc.offered_price=doc.basic_price-total;
 	refresh_field('estimated_price');
-	refresh_field('offered_price');
+	// refresh_field('offered_price');
 
 }
 

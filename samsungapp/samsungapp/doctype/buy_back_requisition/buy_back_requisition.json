@@ -553,7 +553,7 @@
    "print_hide": 0, 
    "read_only": 0, 
    "report_hide": 0, 
-   "reqd": 0, 
+   "reqd": 1, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 0
@@ -1158,7 +1158,7 @@
  "is_submittable": 1, 
  "issingle": 0, 
  "istable": 0, 
- "modified": "2015-10-14 16:20:55.117480", 
+ "modified": "2015-11-16 11:33:15.285916", 
  "modified_by": "Administrator", 
  "module": "samsungapp", 
  "name": "Buy Back Requisition", 
